@@ -2,7 +2,7 @@
 
 namespace ListaEspera.Models
 {
-	public class Modality
+	public class ModalityModel
 {
 	public int Id { get; set; }
 	public string Code { get; set; } = string.Empty;
@@ -10,7 +10,7 @@ namespace ListaEspera.Models
 	public string ClassTimeTable { get; set; } = string.Empty;
 	public DateTime CreationDate { get; set; } = DateTime.Now;
 
-    public List<WaitList> ListaEspera { get; set; } = new();
+    public List<WaitListModel> ListaEspera { get; set; } = new();
 
 
 }

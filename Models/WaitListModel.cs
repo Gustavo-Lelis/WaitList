@@ -3,7 +3,7 @@ using ListaEspera.Models.Enuns;
 
 namespace ListaEspera.Models
 {
-    public class WaitList
+    public class WaitListModel
 {
     public int Id { get; set; }
     public int ClientId { get; set; }
@@ -15,9 +15,9 @@ namespace ListaEspera.Models
     public DateTime? ContactDate { get; set; }
     public PositionStatus PositionStats { get; set; }
 
-    public Client Client { get; set; } = new();
-    public Modality Modality { get; set; } = new();
-    public Attendant Attendant { get; set; } = new();
+    public ClientModel Client { get; set; } = new();
+    public ModalityModel Modality { get; set; } = new();
+    public AttendantModel Attendant { get; set; } = new();
 
 }
 }

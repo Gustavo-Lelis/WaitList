@@ -9,8 +9,8 @@ public class AppDbContext : DbContext
 	{
 	}
 
-	public DbSet<Client> Clients { get; set; }
-	public DbSet<Attendant> Attendants { get; set; }
-	public DbSet<Modality> Modalitys { get; set; }
-	public DbSet<WaitList> WaitLists { get; set; }
+	public DbSet<ClientModel> Clients { get; set; }
+	public DbSet<AttendantModel> Attendants { get; set; }
+	public DbSet<ModalityModel> Modalitys { get; set; }
+	public DbSet<WaitListModel> WaitLists { get; set; }
 }
