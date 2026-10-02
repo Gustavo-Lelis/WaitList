@@ -1,3 +1,4 @@
+using ListaEspera.Services.Modality;
 using ListaEspera.Services.WaitList;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 builder.Services.AddScoped<IWaitListInterface, WaitListService>();
+builder.Services.AddScoped<IModality,ModalityService>();
 
 var app = builder.Build();
 
