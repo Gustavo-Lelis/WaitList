@@ -15,9 +15,9 @@ namespace ListaEspera.Models
     public DateTime? ContactDate { get; set; }
     public PositionStatus PositionStats { get; set; }
 
-    public ClientModel Client { get; set; } = new();
-    public ModalityModel Modality { get; set; } = new();
-    public AttendantModel Attendant { get; set; } = new();
+    public ClientModel Client { get; set; } = new ClientModel();
+    public ModalityModel Modality { get; set; } = new ModalityModel();
+    public AttendantModel Attendant { get; set; } = new AttendantModel();
 
 }
 }

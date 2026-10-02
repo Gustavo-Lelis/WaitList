@@ -10,7 +10,7 @@ namespace ListaEspera.Models
 	public string ClassTimeTable { get; set; } = string.Empty;
 	public DateTime CreationDate { get; set; } = DateTime.Now;
 
-    public List<WaitListModel> ListaEspera { get; set; } = new();
+    public List<WaitListModel> ListaEspera { get; set; } = new List<WaitListModel>();
 
 
 }

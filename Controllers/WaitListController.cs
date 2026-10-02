@@ -13,7 +13,7 @@ namespace ListaEspera.Controllers
     [Route("api/[controller]")]
     [ApiController]
     
-    public class WaitListController : Controller
+    public class WaitListController : ControllerBase
     {
         private readonly IWaitListInterface _waitlistInterface;
 
