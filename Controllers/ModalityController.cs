@@ -12,14 +12,14 @@ namespace ListaEspera.Controllers
     [Route("api/Modality")]
     public class ModalityController : ControllerBase
     {
-        public readonly IModality _iModality;
+        public readonly IModalityService _iModality;
 
-        public ModalityController(IModality iModality)
+        public ModalityController(IModalityService iModality)
         {
             _iModality = iModality;
         }
 
-        [HttpPost("RegisterModality")]
+        [HttpPost("Register")]
 
         public async Task<IActionResult> CreateModalitys(ModalityDto modalityDto)
         {

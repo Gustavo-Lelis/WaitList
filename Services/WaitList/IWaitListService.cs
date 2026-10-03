@@ -6,7 +6,7 @@ using ListaEspera.Models;
 
 namespace ListaEspera.Services.WaitList
 {
-    public interface IWaitListInterface
+    public interface IWaitListService
     {
         Task<ResponseModel<List<WaitListModel>>> AllUserModality();
     }

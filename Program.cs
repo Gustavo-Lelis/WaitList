@@ -16,8 +16,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 
-builder.Services.AddScoped<IWaitListInterface, WaitListService>();
-builder.Services.AddScoped<IModality,ModalityService>();
+builder.Services.AddScoped<IWaitListService, WaitListService>();
+builder.Services.AddScoped<IModalityService,ModalityService>();
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddMaps(typeof(Program).Assembly);
+});
 
 var app = builder.Build();
 

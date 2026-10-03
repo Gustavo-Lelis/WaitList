@@ -7,7 +7,7 @@ using ListaEspera.Models;
 
 namespace ListaEspera.Services.WaitList
 {
-    public class WaitListService : IWaitListInterface
+    public class WaitListService : IWaitListService
     {
         private readonly AppDbContext _dbContext;
 

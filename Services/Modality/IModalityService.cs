@@ -7,7 +7,7 @@ using ListaEspera.Models;
 
 namespace ListaEspera.Services.Modality
 {
-    public interface IModality
+    public interface IModalityService
     {
         Task<ResponseModel<ModalityModel>> CreateModality(ModalityDto modalityDto);
     }

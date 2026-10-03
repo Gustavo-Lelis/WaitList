@@ -8,7 +8,7 @@ using ListaEspera.Models;
 
 namespace ListaEspera.Services.Modality
 {
-    public class ModalityService : IModality
+    public class ModalityService : IModalityService
     {
         public readonly AppDbContext _dbContext;
         public readonly IMapper _mapper;
@@ -25,7 +25,11 @@ namespace ListaEspera.Services.Modality
 
             try
             {
-                ModalityModel modality = _mapper.Map<ModalityModel>(modalityDto);
+                ModalityModel modality = new ModalityModel();
+                
+                modality.Name = modalityDto.Name;
+                modality.Code = modalityDto.Code;
+                modality.ClassTimeTable = modalityDto.ClassTimeTable;
 
                 _dbContext.Add(modality);
                 await _dbContext.SaveChangesAsync();

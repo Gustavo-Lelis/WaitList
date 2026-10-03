@@ -15,9 +15,9 @@ namespace ListaEspera.Controllers
     
     public class WaitListController : ControllerBase
     {
-        private readonly IWaitListInterface _waitlistInterface;
+        private readonly IWaitListService _waitlistInterface;
 
-        public WaitListController(IWaitListInterface waitListInterface)
+        public WaitListController(IWaitListService waitListInterface)
         {
             _waitlistInterface = waitListInterface;
         }
