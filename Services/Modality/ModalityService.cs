@@ -10,8 +10,8 @@ namespace ListaEspera.Services.Modality
 {
     public class ModalityService : IModalityService
     {
-        public readonly AppDbContext _dbContext;
-        public readonly IMapper _mapper;
+        private readonly AppDbContext _dbContext;
+        private readonly IMapper _mapper;
     
         public ModalityService(AppDbContext dbContext, IMapper mapper)
         {
