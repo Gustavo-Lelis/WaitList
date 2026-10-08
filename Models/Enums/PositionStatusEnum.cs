@@ -1,4 +1,4 @@
-namespace ListaEspera.Models.Enuns
+namespace ListaEspera.Models.Enums
 {
     public enum PositionStatus
     {
@@ -7,8 +7,8 @@ namespace ListaEspera.Models.Enuns
         ForaDoPrazo = 2,
         FalhaNoContato = 3,
         Matriculado = 4,
-         Desistente = 5,
-         MatriculadoEmOutraTurma = 6,
-         ConvidadoEmOutraTurma = 7
+        Desistente = 5,
+        MatriculadoEmOutraTurma = 6,
+        ConvidadoEmOutraTurma = 7
     }
 }

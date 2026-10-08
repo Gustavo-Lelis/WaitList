@@ -1,5 +1,5 @@
 ﻿using System;
-using ListaEspera.Models.Enuns;
+using ListaEspera.Models.Enums;
 
 namespace ListaEspera.Models
 {
@@ -15,9 +15,9 @@ namespace ListaEspera.Models
     public DateTime? ContactDate { get; set; }
     public PositionStatus PositionStats { get; set; }
 
-    public ClientModel Client { get; set; } = new ClientModel();
-    public ModalityModel Modality { get; set; } = new ModalityModel();
-    public AttendantModel Attendant { get; set; } = new AttendantModel();
+    public ClientModel? Client { get; set; }
+    public ModalityModel? Modality { get; set; }
+    public AttendantModel? Attendant { get; set; }
 
 }
 }

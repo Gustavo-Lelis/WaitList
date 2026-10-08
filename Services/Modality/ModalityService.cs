@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
+
 using ListaEspera.Dtos;
 using ListaEspera.Models;
 
@@ -11,12 +11,10 @@ namespace ListaEspera.Services.Modality
     public class ModalityService : IModalityService
     {
         private readonly AppDbContext _dbContext;
-        private readonly IMapper _mapper;
     
-        public ModalityService(AppDbContext dbContext, IMapper mapper)
+        public ModalityService(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
 
         public async Task<ResponseModel<ModalityModel>> CreateModality(ModalityDto modalityDto)
@@ -43,7 +41,7 @@ namespace ListaEspera.Services.Modality
             {
                 response.Message = ex.Message;
                 response.Status = false;
-                return response;
+                return response; 
             }
         }
     }

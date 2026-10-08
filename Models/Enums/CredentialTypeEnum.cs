@@ -1,4 +1,4 @@
-namespace ListaEspera.Models.Enuns
+namespace ListaEspera.Models.Enums
 {
     public enum CredentialType
     {

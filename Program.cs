@@ -1,3 +1,4 @@
+using ListaEspera.Services.Client;
 using ListaEspera.Services.Modality;
 using ListaEspera.Services.WaitList;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IWaitListService, WaitListService>();
 builder.Services.AddScoped<IModalityService,ModalityService>();
+builder.Services.AddScoped<IClientService,ClientService>();
 
 builder.Services.AddAutoMapper(cfg =>
 {
