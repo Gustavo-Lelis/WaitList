@@ -18,12 +18,10 @@ namespace ListaEspera.Controllers
     public class WaitListController : ControllerBase
     {
         private readonly IWaitListService _iWaitlistService;
-        private readonly IClientService _iClientService;
 
-        public WaitListController(IWaitListService iWaitListService, IClientService iClientService)
+        public WaitListController(IWaitListService iWaitListService)
         {
             _iWaitlistService = iWaitListService;
-            _iClientService = iClientService;
         }
 
 
@@ -34,12 +32,7 @@ namespace ListaEspera.Controllers
             return Ok(waitList);
         }
 
-        [HttpPost("newClient")]
-        public async Task<IActionResult> RegisterClient(ClientDto clientDto)
-        {
-            var client = await _iClientService.CreateClient(clientDto);
-            return Ok(client);
-        }
+    
         
     }
 }
