@@ -12,7 +12,6 @@ namespace ListaEspera.Dtos
         public string Name { get; set; } = string.Empty;
         [Required(ErrorMessage = "Digie o codigo da Modalidade")]
         public string Code { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Digie o horario da Modalidade")]
-        public string ClassTimeTable { get; set; } = string.Empty;
+        
     }
 }

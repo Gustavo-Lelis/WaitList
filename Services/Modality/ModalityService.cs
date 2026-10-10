@@ -27,7 +27,7 @@ namespace ListaEspera.Services.Modality
                 
                 modality.Name = modalityDto.Name;
                 modality.Code = modalityDto.Code;
-                modality.ClassTimeTable = modalityDto.ClassTimeTable;
+                
 
                 _dbContext.Add(modality);
                 await _dbContext.SaveChangesAsync();
@@ -43,6 +43,11 @@ namespace ListaEspera.Services.Modality
                 response.Status = false;
                 return response; 
             }
+        }
+
+        public Task<List<ResponseModel<ModalityModel>>> ListModality()
+        {
+            throw new NotImplementedException();
         }
     }
 }

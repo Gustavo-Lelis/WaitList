@@ -10,5 +10,6 @@ namespace ListaEspera.Services.Modality
     public interface IModalityService
     {
         Task<ResponseModel<ModalityModel>> CreateModality(ModalityDto modalityDto);
+        Task<List<ResponseModel<ModalityModel>>> ListModality();
     }
 }
