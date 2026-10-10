@@ -16,7 +16,7 @@ namespace ListaEspera.Services.Attendant
             _dbContext = dbContext;
         }
 
-        public async Task<ResponseModel<AttendantModel>> CreateAttendant(AttedantDto attendantDto)
+        public async Task<ResponseModel<AttendantModel>> CreateAttendant(AttendantDto attendantDto)
         {
             ResponseModel<AttendantModel> response = new ResponseModel<AttendantModel>();
 

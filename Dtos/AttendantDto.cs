@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ListaEspera.Dtos
 {
-    public class AttedantDto
+    public class AttendantDto
     {
         [Required(ErrorMessage = "Digie o nome")]
         public string Name { get; set; } = string.Empty;
