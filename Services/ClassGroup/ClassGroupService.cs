@@ -7,7 +7,7 @@ using ListaEspera.Models;
 
 namespace ListaEspera.Services.ClassGroup
 {
-    public class ClassGroupService
+    public class ClassGroupService : IClassGroupService
     {
         private readonly AppDbContext _dbContext;
     
@@ -28,6 +28,7 @@ namespace ListaEspera.Services.ClassGroup
                 classGroup.Name = classGroupDto.Name;
                 classGroup.Code = classGroupDto.Code;
                 classGroup.Days = classGroupDto.Days;
+                classGroup.ClassTimeTable = classGroupDto.ClassTimeTable;
                 classGroup.MinAge = classGroupDto.MinAge;
                 classGroup.MaxAge = classGroupDto.MaxAge;
                 classGroup.Year = classGroupDto.Year;

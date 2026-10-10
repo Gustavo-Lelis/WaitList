@@ -7,16 +7,16 @@ namespace ListaEspera.Models
 {
     public int Id { get; set; }
     public int ClientId { get; set; }
-    public int ModalityId { get; set; }
+    public int ClassGroupId { get; set; }
     public int AttendantId { get; set; }
 
     public CredentialType Credential { get; set; } 
     public DateTime CreationDate { get; set; } = DateTime.Now;
     public DateTime? ContactDate { get; set; }
-    public PositionStatus PositionStats { get; set; }
+    public PositionStatus PositionStatus { get; set; }
 
     public ClientModel? Client { get; set; }
-    public ModalityModel? Modality { get; set; }
+    public ClassGroupModel? ClassGroup { get; set; }
     public AttendantModel? Attendant { get; set; }
 
 }

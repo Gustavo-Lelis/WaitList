@@ -13,4 +13,5 @@ public class AppDbContext : DbContext
 	public DbSet<AttendantModel> Attendants { get; set; }
 	public DbSet<ModalityModel> Modalitys { get; set; }
 	public DbSet<WaitListModel> WaitLists { get; set; }
+	public DbSet<ClassGroupModel> ClassGroups { get; set; }
 }

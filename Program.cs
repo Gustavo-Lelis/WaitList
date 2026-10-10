@@ -1,4 +1,5 @@
 using ListaEspera.Services.Attendant;
+using ListaEspera.Services.ClassGroup;
 using ListaEspera.Services.Client;
 using ListaEspera.Services.Modality;
 using ListaEspera.Services.WaitList;
@@ -22,7 +23,7 @@ builder.Services.AddScoped<IWaitListService, WaitListService>();
 builder.Services.AddScoped<IModalityService,ModalityService>();
 builder.Services.AddScoped<IClientService,ClientService>();
 builder.Services.AddScoped<IAttendantService,AttendantService>();
-
+builder.Services.AddScoped<IClassGroupService,ClassGroupService>();
 
 
 var app = builder.Build();
