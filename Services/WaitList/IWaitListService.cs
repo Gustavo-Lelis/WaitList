@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ListaEspera.Dtos;
 using ListaEspera.Models;
 
 namespace ListaEspera.Services.WaitList
@@ -9,5 +6,7 @@ namespace ListaEspera.Services.WaitList
     public interface IWaitListService
     {
         Task<ResponseModel<List<WaitListModel>>> AllUserModality();
+        Task<ResponseModel<WaitListModel>> RegisterUser(WaitListDto waitListDto);
+        
     }
 }

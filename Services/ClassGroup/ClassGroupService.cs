@@ -49,5 +49,32 @@ namespace ListaEspera.Services.ClassGroup
                 return response; 
             }
         }
+
+        public async Task<ResponseModel<ClassGroupModel>> FindClassGroupToId(int classId)
+        {
+            ResponseModel<ClassGroupModel> response = new ResponseModel<ClassGroupModel>();
+
+            try
+            {
+                var data = await _dbContext.ClassGroups.FindAsync(classId);
+
+                if(data == null)
+                {
+                    response.Message = "Nenhuma turma encontrado";
+                    response.Status = false;
+                    return response;
+                }
+
+                response.Data = data;
+                response.Message = "Turma encontrado";
+                return response;
+                
+            }catch(Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = false;
+                return response;
+            }
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace ListaEspera.Services.Modality
     {
         Task<ResponseModel<ModalityModel>> CreateModality(ModalityDto modalityDto);
         Task<ResponseModel<List<ModalityModel>>> ListModality();
+        Task<ResponseModel<ModalityModel>> FindModalityToId(int modalityId);
     }
 }

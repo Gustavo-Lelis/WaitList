@@ -10,5 +10,6 @@ namespace ListaEspera.Services.Client
     public interface IClientService
     {
         Task<ResponseModel<ClientModel>> CreateClient(ClientDto clientDto);
+        Task<ResponseModel<ClientModel>> FindClientToId(int clientId);
     }
 }

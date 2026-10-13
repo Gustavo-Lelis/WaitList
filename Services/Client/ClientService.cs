@@ -42,5 +42,32 @@ namespace ListaEspera.Services.Client
                 return response;
             }
         }
+
+        public async Task<ResponseModel<ClientModel>> FindClientToId(int clientId)
+        {
+            ResponseModel<ClientModel> response = new ResponseModel<ClientModel>();
+
+            try
+            {
+                var data = await _dbContext.Clients.FindAsync(clientId);
+
+                if(data == null)
+                {
+                    response.Message = "Nenhum usuario encontrado";
+                    response.Status = false;
+                    return response;
+                }
+
+                response.Data = data;
+                response.Message = "Cliiente encontrado";
+                return response;
+                
+            }catch(Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = false;
+                return response;
+            }
+        }
     }
 }

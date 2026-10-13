@@ -71,5 +71,32 @@ namespace ListaEspera.Services.Modality
                 return response;
             }
         }
+
+        public async Task<ResponseModel<ModalityModel>> FindModalityToId(int modalityId)
+        {
+            ResponseModel<ModalityModel> response = new ResponseModel<ModalityModel>();
+
+            try
+            {
+                var data = await _dbContext.Modalitys.FindAsync(modalityId);
+
+                if(data == null)
+                {
+                    response.Message = "Nenhuma modalidade encontrado";
+                    response.Status = false;
+                    return response;
+                }
+
+                response.Data = data;
+                response.Message = "Modalidade encontrado";
+                return response;
+                
+            }catch(Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = false;
+                return response;
+            }
+        }
     }
 }

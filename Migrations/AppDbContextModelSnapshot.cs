@@ -154,7 +154,7 @@ namespace ListaEspera.Migrations
                     b.Property<int>("AttendantId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ClassGroupModelId")
+                    b.Property<int>("ClassGroupId")
                         .HasColumnType("int");
 
                     b.Property<int>("ClientId")
@@ -169,21 +169,16 @@ namespace ListaEspera.Migrations
                     b.Property<int>("Credential")
                         .HasColumnType("int");
 
-                    b.Property<int>("ModalityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PositionStats")
+                    b.Property<int>("PositionStatus")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AttendantId");
 
-                    b.HasIndex("ClassGroupModelId");
+                    b.HasIndex("ClassGroupId");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("ModalityId");
 
                     b.ToTable("WaitLists");
                 });
@@ -207,9 +202,11 @@ namespace ListaEspera.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ListaEspera.Models.ClassGroupModel", null)
+                    b.HasOne("ListaEspera.Models.ClassGroupModel", "ClassGroup")
                         .WithMany("ListaEspera")
-                        .HasForeignKey("ClassGroupModelId");
+                        .HasForeignKey("ClassGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ListaEspera.Models.ClientModel", "Client")
                         .WithMany("ListaEspera")
@@ -217,17 +214,11 @@ namespace ListaEspera.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ListaEspera.Models.ModalityModel", "Modality")
-                        .WithMany()
-                        .HasForeignKey("ModalityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Attendant");
 
-                    b.Navigation("Client");
+                    b.Navigation("ClassGroup");
 
-                    b.Navigation("Modality");
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("ListaEspera.Models.AttendantModel", b =>

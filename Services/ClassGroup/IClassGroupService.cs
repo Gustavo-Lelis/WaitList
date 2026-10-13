@@ -10,5 +10,6 @@ namespace ListaEspera.Services.ClassGroup
     public interface IClassGroupService
     {
         Task<ResponseModel<ClassGroupModel>> CreateClass(ClassGroupDto classGroupDto);
+        Task<ResponseModel<ClassGroupModel>> FindClassGroupToId(int classId);
     }
 }
