@@ -54,13 +54,13 @@ namespace ListaEspera.Services.Attendant
 
                 if(data == null)
                 {
-                    response.Message = "Nenhuma modalidade encontrado";
+                    response.Message = "Nenhuma attendant encontrado";
                     response.Status = false;
                     return response;
                 }
 
                 response.Data = data;
-                response.Message = "Modalidade encontrado";
+                response.Message = "attedant  encontrado";
                 return response;
                 
             }catch(Exception ex)

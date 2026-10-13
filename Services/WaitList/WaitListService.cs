@@ -56,23 +56,20 @@ namespace ListaEspera.Services.WaitList
             try
             {
                 WaitListModel waitList = new WaitListModel();
-
-                var clientResult = EntityValidate(await _iClient.FindClientToId(waitListDto.ClientId), "Client");
-                
-                var classResult = EntityValidate(await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId), "Class Group");
-                
-                if(ClientValidateClassGroup(clientResult, classResult))
+                if(await ClientValidateClassGroup(waitListDto.ClientId, waitListDto.ClassGroupId))
                 {
                     response.Message = "Usuario ja Cadastrado ";
                     response.Status = false;
                     return response;
                 }
-                
+                var clientResult = EntityValidate(await _iClient.FindClientToId(waitListDto.ClientId), "Client");
                 waitList.Client = clientResult;
                 waitList.ClientId = waitList.Client.Id;
+                var classResult = EntityValidate(await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId), "Class Group");
                 waitList.ClassGroup = classResult;
                 waitList.ClassGroupId = waitList.ClassGroup.Id;
-                var attendantResult = EntityValidate(await _iAttendant.FindAttendantToId(waitListDto.ClassGroupId), "Attedant");
+                
+                var attendantResult = EntityValidate(await _iAttendant.FindAttendantToId(waitListDto.AttendantId), "Attedant");
                 waitList.Attendant = attendantResult;
                 waitList.AttendantId = waitList.Attendant.Id;
                 waitList.Credential = waitListDto.Credential;
@@ -106,16 +103,10 @@ namespace ListaEspera.Services.WaitList
             return response.Data;
         }
 
-        private static bool ClientValidateClassGroup(ClientModel client, ClassGroupModel classGroup)
+        private async Task<bool> ClientValidateClassGroup(int clientId, int classGroupId)
         {
-            foreach(WaitListModel list in client.ListaEspera)
-            {
-                if(list.ClientId == client.Id && list.ClassGroupId == classGroup.Id)
-                {
-                    return true;
-                }
-            }
-            return false;
+           return await _dbContext.WaitLists.AnyAsync(c => c.ClientId == clientId && c.ClassGroupId == classGroupId);
+            
         }
        
     }

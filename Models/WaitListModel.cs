@@ -14,7 +14,7 @@ namespace ListaEspera.Models
     public string ContactNumber {get; set;} = string.Empty;
     public DateTime CreationDate { get; set; } = DateTime.Now;
     public DateTime? ContactDate { get; set; }
-    public PositionStatus PositionStatus = PositionStatus.EmEspera;
+    public PositionStatus PositionStatus { get; set; } = PositionStatus.EmEspera;
 
     public ClientModel? Client { get; set; }
     public ClassGroupModel? ClassGroup { get; set; }
