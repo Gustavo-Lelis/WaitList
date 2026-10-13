@@ -43,5 +43,32 @@ namespace ListaEspera.Services.Attendant
                 return response;
             }
         }
+
+        public async Task<ResponseModel<AttendantModel>> FindAttendantToId(int attendantId)
+        {
+            ResponseModel<AttendantModel> response = new ResponseModel<AttendantModel>();
+
+            try
+            {
+                var data = await _dbContext.Attendants.FindAsync(attendantId);
+
+                if(data == null)
+                {
+                    response.Message = "Nenhuma modalidade encontrado";
+                    response.Status = false;
+                    return response;
+                }
+
+                response.Data = data;
+                response.Message = "Modalidade encontrado";
+                return response;
+                
+            }catch(Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = false;
+                return response;
+            }
+        }
     }
 }

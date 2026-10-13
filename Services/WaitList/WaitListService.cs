@@ -3,6 +3,7 @@ using ListaEspera.Models;
 using ListaEspera.Dtos;
 using ListaEspera.Services.Client;
 using ListaEspera.Services.ClassGroup;
+using ListaEspera.Services.Attendant;
 
 namespace ListaEspera.Services.WaitList
 {
@@ -11,12 +12,14 @@ namespace ListaEspera.Services.WaitList
         private readonly AppDbContext _dbContext;
         private readonly IClientService _iClient;
         private readonly IClassGroupService _iClassGroup;
+        private readonly IAttendantService _iAttendant;
 
-        public WaitListService(AppDbContext dbContext, IClientService iClient, IClassGroupService iClassGroup)
+        public WaitListService(AppDbContext dbContext, IClientService iClient, IClassGroupService iClassGroup, IAttendantService iAttendant)
         {
             _dbContext = dbContext;
             _iClient = iClient;
             _iClassGroup = iClassGroup;
+            _iAttendant = iAttendant;
         }
         public async Task<ResponseModel<List<WaitListModel>>> AllUserModality()
         {
@@ -60,6 +63,11 @@ namespace ListaEspera.Services.WaitList
                 var classResult = EntityVlidate(await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId), "Class Group");
                 waitList.ClassGroup = classResult;
                 waitList.ClassGroupId = waitList.ClassGroup.Id;
+                var attendantResult = EntityVlidate(await _iAttendant.FindAttendantToId(waitListDto.ClassGroupId), "Attedant");
+                waitList.Attendant = attendantResult;
+                waitList.AttendantId = waitList.Attendant.Id;
+                waitList.Credential = waitListDto.Credential;
+                waitList.ContactNumber = waitListDto.ContactNumber;
 
 
                 _dbContext.Add(waitList);
@@ -88,14 +96,6 @@ namespace ListaEspera.Services.WaitList
 
             return response.Data;
         }
-        /*public Enum EnumValidate(T data , String enun)
-        {
-            if (!Enum.IsDefined(typeof(StatusPedido), pedido.Status))
-            {
-                return BadRequest("Status inválido.");
-            }
-        }
-        */
-
+       
     }
 }

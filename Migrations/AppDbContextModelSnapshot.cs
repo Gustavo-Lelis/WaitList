@@ -163,13 +163,14 @@ namespace ListaEspera.Migrations
                     b.Property<DateTime?>("ContactDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ContactNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Credential")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PositionStatus")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

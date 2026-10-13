@@ -10,5 +10,6 @@ namespace ListaEspera.Services.Attendant
     public interface IAttendantService
     {
         Task<ResponseModel<AttendantModel>> CreateAttendant(AttendantDto attendantDto);
+        Task<ResponseModel<AttendantModel>> FindAttendantToId(int attendantId);
     }
 }

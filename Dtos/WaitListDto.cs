@@ -16,13 +16,11 @@ namespace ListaEspera.Dtos
         public int ClassGroupId { get; set; }
         [Required(ErrorMessage = "Digie o id do atendente")]
         public int AttendantId { get; set; }
-        [Required(ErrorMessage = "Digie a ccredencial")]
+        [Required(ErrorMessage = "Digie a credencial")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public CredentialType Credential { get; set; }
         [Required(ErrorMessage = "Digie o numero de contato do Cliete")]
-        public DateTime? ContactDate { get; set; }
-        [Required(ErrorMessage = "Digie o status")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PositionStatus PositionStatus { get; set; }
+        public string ContactNumber {get; set;} = string.Empty;
+        
     }
 }
