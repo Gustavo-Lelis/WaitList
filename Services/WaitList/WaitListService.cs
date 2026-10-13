@@ -57,13 +57,22 @@ namespace ListaEspera.Services.WaitList
             {
                 WaitListModel waitList = new WaitListModel();
 
-                var clientResult = EntityVlidate(await _iClient.FindClientToId(waitListDto.ClientId), "Client");
+                var clientResult = EntityValidate(await _iClient.FindClientToId(waitListDto.ClientId), "Client");
+                
+                var classResult = EntityValidate(await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId), "Class Group");
+                
+                if(ClientValidateClassGroup(clientResult, classResult))
+                {
+                    response.Message = "Usuario ja Cadastrado ";
+                    response.Status = false;
+                    return response;
+                }
+                
                 waitList.Client = clientResult;
                 waitList.ClientId = waitList.Client.Id;
-                var classResult = EntityVlidate(await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId), "Class Group");
                 waitList.ClassGroup = classResult;
                 waitList.ClassGroupId = waitList.ClassGroup.Id;
-                var attendantResult = EntityVlidate(await _iAttendant.FindAttendantToId(waitListDto.ClassGroupId), "Attedant");
+                var attendantResult = EntityValidate(await _iAttendant.FindAttendantToId(waitListDto.ClassGroupId), "Attedant");
                 waitList.Attendant = attendantResult;
                 waitList.AttendantId = waitList.Attendant.Id;
                 waitList.Credential = waitListDto.Credential;
@@ -87,7 +96,7 @@ namespace ListaEspera.Services.WaitList
             }
         }
 
-        public T EntityVlidate<T>(ResponseModel<T> response, string entityName)
+        private static T EntityValidate<T>(ResponseModel<T> response, string entityName)
         {
             if (response == null || response.Data == null)
             {
@@ -95,6 +104,18 @@ namespace ListaEspera.Services.WaitList
             }
 
             return response.Data;
+        }
+
+        private static bool ClientValidateClassGroup(ClientModel client, ClassGroupModel classGroup)
+        {
+            foreach(WaitListModel list in client.ListaEspera)
+            {
+                if(list.ClientId == client.Id && list.ClassGroupId == classGroup.Id)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
        
     }
