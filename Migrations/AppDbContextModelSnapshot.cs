@@ -173,6 +173,9 @@ namespace ListaEspera.Migrations
                     b.Property<int>("Credential")
                         .HasColumnType("int");
 
+                    b.Property<int>("PositionStatus")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AttendantId");
