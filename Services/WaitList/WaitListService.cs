@@ -27,7 +27,32 @@ namespace ListaEspera.Services.WaitList
 
             try
             {
-                var dataDb = await _dbContext.WaitLists.ToListAsync();
+                var dataDb = await _dbContext.WaitLists
+                /* .Where(c => c.ClassGroup.Year == 2026) // Se precisar filtrar, coloque aqui
+                .Select(c => new WaitListDto
+                {
+                    // Dados da FK ClassGroup
+                    ClassGroupName = c.ClassGroup.Name,
+                    ClassGroupCode = c.ClassGroup.Code,
+                    ClassGroupDays = c.ClassGroup.Days,
+                    ClassGroupClassTimeTable = c.ClassGroup.ClassTimeTable,
+                    ClassGroupMinAge = c.ClassGroup.MinAge,
+                    ClassGroupMaxAge = c.ClassGroup.MaxAge,
+                    ClassGroupYear = c.ClassGroup.Year,
+
+                    // Dados da FK Client
+                    CpfClient = c.Client.Cpf,
+                    NameClient = c.Client.Name,
+                    ContactNumber = c.Client.Contato,
+
+                    // Dados da FK Attendant
+                    NameAttendant = c.Attendant.Name
+                })*/
+                .Include(c => c.ClassGroup)
+                .Include(c => c.Client)
+                .Include(c => c.Attendant)
+                .ToListAsync();
+
 
                 if (dataDb.Count == 0)
                 {
@@ -56,7 +81,7 @@ namespace ListaEspera.Services.WaitList
             try
             {
                 WaitListModel waitList = new WaitListModel();
-                if(await ClientValidateClassGroup(waitListDto.ClientId, waitListDto.ClassGroupId))
+                if (await ClientValidateClassGroup(waitListDto.ClientId, waitListDto.ClassGroupId))
                 {
                     response.Message = "Usuario ja Cadastrado ";
                     response.Status = false;
@@ -68,7 +93,7 @@ namespace ListaEspera.Services.WaitList
                 var classResult = EntityValidate(await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId), "Class Group");
                 waitList.ClassGroup = classResult;
                 waitList.ClassGroupId = waitList.ClassGroup.Id;
-                
+
                 var attendantResult = EntityValidate(await _iAttendant.FindAttendantToId(waitListDto.AttendantId), "Attedant");
                 waitList.Attendant = attendantResult;
                 waitList.AttendantId = waitList.Attendant.Id;
@@ -105,9 +130,9 @@ namespace ListaEspera.Services.WaitList
 
         private async Task<bool> ClientValidateClassGroup(int clientId, int classGroupId)
         {
-           return await _dbContext.WaitLists.AnyAsync(c => c.ClientId == clientId && c.ClassGroupId == classGroupId);
-            
+            return await _dbContext.WaitLists.AnyAsync(c => c.ClientId == clientId && c.ClassGroupId == classGroupId);
+
         }
-       
+
     }
 }
