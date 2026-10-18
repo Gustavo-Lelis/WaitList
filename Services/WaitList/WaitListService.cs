@@ -103,7 +103,10 @@ namespace ListaEspera.Services.WaitList
                 waitList.AttendantId = waitList.Attendant.Id;
 
                 waitList.Credential = waitListDto.Credential;
-                
+
+                _dbContext.Add(waitList);
+                await _dbContext.SaveChangesAsync();
+
                 WaitListResponseDto responseData = new WaitListResponseDto
                 {
                     Id = waitList.Id,
@@ -129,9 +132,6 @@ namespace ListaEspera.Services.WaitList
                     ClientPositionStatus = waitList.PositionStatus,
                     CreationDate = waitList.CreationDate
                 };
-
-                _dbContext.Add(waitList);
-                await _dbContext.SaveChangesAsync();
 
                 response.Data = responseData;
                 response.Message = "Cliente cadastrado na lista";
