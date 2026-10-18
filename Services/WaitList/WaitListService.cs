@@ -21,15 +21,15 @@ namespace ListaEspera.Services.WaitList
             _iClassGroup = iClassGroup;
             _iAttendant = iAttendant;
         }
-        public async Task<ResponseModel<List<WaitListModel>>> AllUserModality()
+        public async Task<ResponseModel<List<WaitListResponseDto>>> AllUserModality()
         {
-            ResponseModel<List<WaitListModel>> response = new ResponseModel<List<WaitListModel>>();
+            ResponseModel<List<WaitListResponseDto>> response = new ResponseModel<List<WaitListResponseDto>>();
 
             try
             {
                 var dataDb = await _dbContext.WaitLists
-                /* .Where(c => c.ClassGroup.Year == 2026) // Se precisar filtrar, coloque aqui
-                .Select(c => new WaitListDto
+                // .Where(c => c.ClassGroup.Year == 2026) // Se precisar filtrar, coloque aqui
+                .Select(c => new WaitListResponseDto
                 {
                     // Dados da FK ClassGroup
                     ClassGroupName = c.ClassGroup.Name,
@@ -41,16 +41,16 @@ namespace ListaEspera.Services.WaitList
                     ClassGroupYear = c.ClassGroup.Year,
 
                     // Dados da FK Client
-                    CpfClient = c.Client.Cpf,
-                    NameClient = c.Client.Name,
-                    ContactNumber = c.Client.Contato,
+                    ClientCpf = c.Client.Cpf,
+                    ClientName = c.Client.Name,
+                    ClientContactNumber = c.Client.Contato,
 
                     // Dados da FK Attendant
-                    NameAttendant = c.Attendant.Name
-                })*/
-                .Include(c => c.ClassGroup)
-                .Include(c => c.Client)
-                .Include(c => c.Attendant)
+                    AttendantName = c.Attendant.Name,
+
+                    ClientCredential = c.Credential,
+                    ClientPositionStatus = c.PositionStatus
+                })
                 .ToListAsync();
 
 
@@ -90,6 +90,7 @@ namespace ListaEspera.Services.WaitList
                 var clientResult = EntityValidate(await _iClient.FindClientToId(waitListDto.ClientId), "Client");
                 waitList.Client = clientResult;
                 waitList.ClientId = waitList.Client.Id;
+
                 var classResult = EntityValidate(await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId), "Class Group");
                 waitList.ClassGroup = classResult;
                 waitList.ClassGroupId = waitList.ClassGroup.Id;
@@ -97,8 +98,9 @@ namespace ListaEspera.Services.WaitList
                 var attendantResult = EntityValidate(await _iAttendant.FindAttendantToId(waitListDto.AttendantId), "Attedant");
                 waitList.Attendant = attendantResult;
                 waitList.AttendantId = waitList.Attendant.Id;
+
                 waitList.Credential = waitListDto.Credential;
-                waitList.ContactNumber = waitListDto.ContactNumber;
+                
 
 
                 _dbContext.Add(waitList);

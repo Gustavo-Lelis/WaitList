@@ -11,7 +11,6 @@ namespace ListaEspera.Models
     public int AttendantId { get; set; }
 
     public CredentialType Credential { get; set; } 
-    public string ContactNumber {get; set;} = string.Empty;
     public DateTime CreationDate { get; set; } = DateTime.Now;
     public DateTime? ContactDate { get; set; }
     public PositionStatus PositionStatus { get; set; } = PositionStatus.EmEspera;

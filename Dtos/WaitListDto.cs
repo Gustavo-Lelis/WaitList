@@ -19,8 +19,7 @@ namespace ListaEspera.Dtos
         [Required(ErrorMessage = "Digie a credencial")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public CredentialType Credential { get; set; }
-        [Required(ErrorMessage = "Digie o numero de contato do Cliete")]
-        public string ContactNumber {get; set;} = string.Empty;
+        
         
     }
 }
