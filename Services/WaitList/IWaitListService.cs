@@ -6,7 +6,7 @@ namespace ListaEspera.Services.WaitList
     public interface IWaitListService
     {
         Task<ResponseModel<List<WaitListResponseDto>>> AllUserModality();
-        Task<ResponseModel<WaitListModel>> RegisterUser(WaitListDto waitListDto);
+        Task<ResponseModel<WaitListResponseDto>> RegisterUser(WaitListDto waitListDto);
         
     }
 }

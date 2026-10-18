@@ -8,6 +8,7 @@ namespace ListaEspera.Dtos
 {
     public class WaitListResponseDto
     {
+        public int Id { get; set; }
         public string ClassGroupName  { get; set; } 
         public string ClassGroupCode {get; set;} 
         public string ClassGroupDays { get; set; } 
@@ -22,6 +23,7 @@ namespace ListaEspera.Dtos
         public string AttendantName { get; set; }
         public CredentialType ClientCredential { get; set; } 
         public PositionStatus ClientPositionStatus { get; set; } 
+        public DateTime CreationDate { get; set; }
 
     }
 }

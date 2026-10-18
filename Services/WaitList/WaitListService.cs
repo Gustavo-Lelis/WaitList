@@ -31,6 +31,8 @@ namespace ListaEspera.Services.WaitList
                 // .Where(c => c.ClassGroup.Year == 2026) // Se precisar filtrar, coloque aqui
                 .Select(c => new WaitListResponseDto
                 {
+                    Id = c.Id,
+
                     // Dados da FK ClassGroup
                     ClassGroupName = c.ClassGroup.Name,
                     ClassGroupCode = c.ClassGroup.Code,
@@ -49,7 +51,8 @@ namespace ListaEspera.Services.WaitList
                     AttendantName = c.Attendant.Name,
 
                     ClientCredential = c.Credential,
-                    ClientPositionStatus = c.PositionStatus
+                    ClientPositionStatus = c.PositionStatus,
+                    CreationDate = c.CreationDate
                 })
                 .ToListAsync();
 
@@ -74,9 +77,9 @@ namespace ListaEspera.Services.WaitList
             }
         }
 
-        public async Task<ResponseModel<WaitListModel>> RegisterUser(WaitListDto waitListDto)
+        public async Task<ResponseModel<WaitListResponseDto>> RegisterUser(WaitListDto waitListDto)
         {
-            ResponseModel<WaitListModel> response = new ResponseModel<WaitListModel>();
+            ResponseModel<WaitListResponseDto> response = new ResponseModel<WaitListResponseDto>();
 
             try
             {
@@ -101,12 +104,36 @@ namespace ListaEspera.Services.WaitList
 
                 waitList.Credential = waitListDto.Credential;
                 
+                WaitListResponseDto responseData = new WaitListResponseDto
+                {
+                    Id = waitList.Id,
 
+                    // Dados da FK ClassGroup
+                    ClassGroupName = waitList.ClassGroup.Name,
+                    ClassGroupCode = waitList.ClassGroup.Code,
+                    ClassGroupDays = waitList.ClassGroup.Days,
+                    ClassGroupClassTimeTable = waitList.ClassGroup.ClassTimeTable,
+                    ClassGroupMinAge = waitList.ClassGroup.MinAge,
+                    ClassGroupMaxAge = waitList.ClassGroup.MaxAge,
+                    ClassGroupYear = waitList.ClassGroup.Year,
+
+                    // Dados da FK Client
+                    ClientCpf = waitList.Client.Cpf,
+                    ClientName = waitList.Client.Name,
+                    ClientContactNumber = waitList.Client.Contato,
+
+                    // Dados da FK Attendant
+                    AttendantName = waitList.Attendant.Name,
+
+                    ClientCredential = waitList.Credential,
+                    ClientPositionStatus = waitList.PositionStatus,
+                    CreationDate = waitList.CreationDate
+                };
 
                 _dbContext.Add(waitList);
                 await _dbContext.SaveChangesAsync();
 
-                response.Data = waitList;
+                response.Data = responseData;
                 response.Message = "Cliente cadastrado na lista";
                 return response;
 
