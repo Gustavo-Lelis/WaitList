@@ -5,6 +5,7 @@ using ListaEspera.Services.Client;
 using ListaEspera.Services.ClassGroup;
 using ListaEspera.Services.Attendant;
 using ListaEspera.Models.Enums;
+using ListaEspera.Extensions;
 
 namespace ListaEspera.Services.WaitList
 {
@@ -29,7 +30,7 @@ namespace ListaEspera.Services.WaitList
             try
             {
                 var dataDb = await _dbContext.WaitLists
-                .Select(c => SelectWaitListResponseDto(c))
+                .ProjectToDto()
                 .ToListAsync();
 
 
@@ -147,7 +148,7 @@ namespace ListaEspera.Services.WaitList
             {
                 var data = await _dbContext.WaitLists
                 .Where(c => c.ClassGroupId == classId && c.PositionStatus == positionStatus)
-                .Select(c => SelectWaitListResponseDto(c))
+                .ProjectToDto()
                 .OrderBy(c => c.CreationDate)
                 .ToListAsync();
 
@@ -170,33 +171,6 @@ namespace ListaEspera.Services.WaitList
             throw new NotImplementedException();
         }
 
-        public WaitListResponseDto SelectWaitListResponseDto(WaitListModel c)
-        {
-            return new WaitListResponseDto
-            {
-                Id = c.Id,
-
-                // Dados da FK ClassGroup
-                ClassGroupName = c.ClassGroup.Name,
-                ClassGroupCode = c.ClassGroup.Code,
-                ClassGroupDays = c.ClassGroup.Days,
-                ClassGroupClassTimeTable = c.ClassGroup.ClassTimeTable,
-                ClassGroupMinAge = c.ClassGroup.MinAge,
-                ClassGroupMaxAge = c.ClassGroup.MaxAge,
-                ClassGroupYear = c.ClassGroup.Year,
-
-                // Dados da FK Client
-                ClientCpf = c.Client.Cpf,
-                ClientName = c.Client.Name,
-                ClientContactNumber = c.Client.Contato,
-
-                // Dados da FK Attendant
-                AttendantName = c.Attendant.Name,
-
-                ClientCredential = c.Credential,
-                ClientPositionStatus = c.PositionStatus,
-                CreationDate = c.CreationDate
-            };
-        } 
+        
     }
 }
