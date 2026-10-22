@@ -26,7 +26,7 @@ namespace ListaEspera.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("ListaCompleta")]
         public async Task<IActionResult> getWaitList()
         {
             var waitList = await _iWaitList.AllUserModality();
@@ -41,7 +41,7 @@ namespace ListaEspera.Controllers
             return Ok(waitList);
         }
 
-        [HttpGet]
+        [HttpGet("ListaDeTurmas")]
         public async Task<IActionResult> getListToClass(int classId, PositionStatus positionStatus)
         {
             var waitList = await _iWaitList.ListOfClassToPosition(classId, positionStatus);
