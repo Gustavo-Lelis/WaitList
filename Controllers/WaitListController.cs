@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using ListaEspera.Services.Client;
 using ListaEspera.Dtos;
+using ListaEspera.Models.Enums;
 
 namespace ListaEspera.Controllers
 {
@@ -40,7 +41,12 @@ namespace ListaEspera.Controllers
             return Ok(waitList);
         }
 
-    
+        [HttpGet]
+        public async Task<IActionResult> getListToClass(int classId, PositionStatus positionStatus)
+        {
+            var waitList = await _iWaitList.ListOfClassToPosition(classId, positionStatus);
+            return Ok(waitList);
+        }
         
     }
 }

@@ -4,6 +4,7 @@ using ListaEspera.Dtos;
 using ListaEspera.Services.Client;
 using ListaEspera.Services.ClassGroup;
 using ListaEspera.Services.Attendant;
+using ListaEspera.Models.Enums;
 
 namespace ListaEspera.Services.WaitList
 {
@@ -163,5 +164,56 @@ namespace ListaEspera.Services.WaitList
 
         }
 
+        public async Task<ResponseModel<List<WaitListResponseDto>>> ListOfClassToPosition(int classId, PositionStatus positionStatus)
+        {
+            ResponseModel<List<WaitListResponseDto>> response = new ResponseModel<List<WaitListResponseDto>>();
+            
+            try
+            {
+                var data = await _dbContext.WaitLists
+                .Where(c => c.ClassGroupId == classId && c.PositionStatus == positionStatus)
+                .Select(c => new WaitListResponseDto
+                {
+                    ClassGroupName = c.ClassGroup.Name,
+                    ClassGroupCode = c.ClassGroup.Code,
+                    ClassGroupDays = c.ClassGroup.Days,
+                    ClassGroupClassTimeTable = c.ClassGroup.ClassTimeTable,
+                    ClassGroupMinAge = c.ClassGroup.MinAge,
+                    ClassGroupMaxAge = c.ClassGroup.MaxAge,
+                    ClassGroupYear = c.ClassGroup.Year,
+
+                    // Dados da FK Client
+                    ClientCpf = c.Client.Cpf,
+                    ClientName = c.Client.Name,
+                    ClientContactNumber = c.Client.Contato,
+
+                    // Dados da FK Attendant
+                    AttendantName = c.Attendant.Name,
+
+                    ClientCredential = c.Credential,
+                    ClientPositionStatus = c.PositionStatus,
+                    CreationDate = c.CreationDate
+                })
+                .OrderBy(c => c.CreationDate)
+                .ToListAsync();
+
+                response.Data = data;
+                response.Message = data?.Any() == true ? "Lista da turma encontrada" : "Lista não encontrada";
+
+                return response;
+                
+            }catch(Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = false;
+                return response;
+            }
+
+        }
+
+        public Task<ResponseModel<List<WaitListResponseDto>>> ListOfModality(int ModalityId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
