@@ -6,6 +6,7 @@ using ListaEspera.Services.ClassGroup;
 using ListaEspera.Services.Attendant;
 using ListaEspera.Models.Enums;
 using ListaEspera.Extensions;
+using ListaEspera.Dtos.WaitList;
 
 namespace ListaEspera.Services.WaitList
 {
@@ -171,25 +172,32 @@ namespace ListaEspera.Services.WaitList
             throw new NotImplementedException();
         }
 
-        public async Task<ResponseModel<WaitListModel>> UpdatePositionStatus(WaitListResponseDto waitListDto)
+        public async Task<ResponseModel<WaitListEditStatusDto>> UpdatePositionStatus(WaitListEditStatusDto editStatus)
         {
-            ResponseModel<WaitListModel> response = new ResponseModel<WaitListModel>();
+            ResponseModel<WaitListEditStatusDto> response = new ResponseModel<WaitListEditStatusDto>();
 
             try
             {
-                var query = await _dbContext. WaitLists.FindAsync(waitListDto.Id);
+                var query = await _dbContext.WaitLists.FindAsync(editStatus.Id);
                 if(query == null)
                 {
                     response.Message = "Usuario não localizado";
+                    response.Status = false;
                     return response;
                 }
 
-                query.PositionStatus = waitListDto.ClientPositionStatus;
+                query.PositionStatus = editStatus.PositionStatus;
 
                 _dbContext.Update(query);
                 await _dbContext.SaveChangesAsync();
 
-                response.Data = query;
+                WaitListEditStatusDto data = new WaitListEditStatusDto
+                {
+                    Id = query.Id,
+                    PositionStatus = query.PositionStatus
+                };
+
+                response.Data = data;
                 response.Message = "Update Positon Status";
 
                 return response;

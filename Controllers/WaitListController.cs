@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using ListaEspera.Services.Client;
 using ListaEspera.Dtos;
 using ListaEspera.Models.Enums;
+using ListaEspera.Dtos.WaitList;
 
 namespace ListaEspera.Controllers
 {
@@ -48,10 +49,10 @@ namespace ListaEspera.Controllers
             return Ok(waitList);
         }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> PositionStatusUpdate(WaitListResponseDto waitListResponseDto)
+        [HttpPatch("UpdateStatus")]
+        public async Task<IActionResult> PositionStatusUpdate(WaitListEditStatusDto waitListEditStatusDto)
         {
-            var waitList = await _iWaitList.UpdatePositionStatus(waitListResponseDto);
+            var waitList = await _iWaitList.UpdatePositionStatus(waitListEditStatusDto);
             return Ok(waitList);
         }
         

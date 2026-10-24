@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ListaEspera.Dtos;
+using ListaEspera.Dtos.WaitList;
 using ListaEspera.Models;
 
 namespace ListaEspera.Extensions
@@ -40,5 +41,7 @@ namespace ListaEspera.Extensions
         {
             return query.Select(Mapping);
         }
+
+      
     }
 }
