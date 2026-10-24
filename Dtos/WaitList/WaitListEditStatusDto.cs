@@ -13,6 +13,6 @@ namespace ListaEspera.Dtos.WaitList
         public int Id { get; set; }
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PositionStatus PositionStatus { get; set; }
-        public DateTime? ContactDate { get; set; } = DateTime.Now;
+        public DateTime? ContactDate { get; set; }
     }
 }

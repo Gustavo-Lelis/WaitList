@@ -187,6 +187,7 @@ namespace ListaEspera.Services.WaitList
                 }
 
                 query.PositionStatus = editStatus.PositionStatus;
+                query.ContactDate = DateTime.Now;
 
                 _dbContext.Update(query);
                 await _dbContext.SaveChangesAsync();
