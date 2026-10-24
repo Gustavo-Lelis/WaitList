@@ -10,6 +10,7 @@ namespace ListaEspera.Services.WaitList
         Task<ResponseModel<WaitListResponseDto>> RegisterUser(WaitListDto waitListDto);
         Task<ResponseModel<List<WaitListResponseDto>>> ListOfClassToPosition(int classId, PositionStatus positionStatus);
         Task<ResponseModel<List<WaitListResponseDto>>> ListOfModality(int ModalityId);
+        Task<ResponseModel<WaitListModel>> UpdatePositionStatus(WaitListResponseDto waitListDto);
         
     }
 }

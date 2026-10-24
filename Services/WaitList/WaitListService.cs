@@ -171,6 +171,35 @@ namespace ListaEspera.Services.WaitList
             throw new NotImplementedException();
         }
 
-        
+        public async Task<ResponseModel<WaitListModel>> UpdatePositionStatus(WaitListResponseDto waitListDto)
+        {
+            ResponseModel<WaitListModel> response = new ResponseModel<WaitListModel>();
+
+            try
+            {
+                var query = await _dbContext. WaitLists.FindAsync(waitListDto.Id);
+                if(query == null)
+                {
+                    response.Message = "Usuario não localizado";
+                    return response;
+                }
+
+                query.PositionStatus = waitListDto.ClientPositionStatus;
+
+                _dbContext.Update(query);
+                await _dbContext.SaveChangesAsync();
+
+                response.Data = query;
+                response.Message = "Update Positon Status";
+
+                return response;
+
+            }catch(Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = false;
+                return response;
+            }
+        }
     }
 }
