@@ -11,10 +11,6 @@ namespace ListaEspera.Dtos.WaitList
     public class WaitListEditStatusDto
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Digie o id do Attendant")]
-        public int AttendantId { get; set; }
-        [Required(ErrorMessage = "Digie o novo Status")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public PositionStatus PositionStatus { get; set; } 
     }
 }
