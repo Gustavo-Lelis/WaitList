@@ -194,7 +194,8 @@ namespace ListaEspera.Services.WaitList
                 WaitListEditStatusDto data = new WaitListEditStatusDto
                 {
                     Id = query.Id,
-                    PositionStatus = query.PositionStatus
+                    PositionStatus = query.PositionStatus,
+                    ContactDate = query.ContactDate
                 };
 
                 response.Data = data;
