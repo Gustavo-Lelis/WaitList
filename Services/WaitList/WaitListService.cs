@@ -188,10 +188,10 @@ namespace ListaEspera.Services.WaitList
 
                 if(editStatus.PositionStatus == PositionStatus.Convidado)
                 {
-                    query.PositionStatus = editStatus.PositionStatus;
                     query.ContactDate = DateTime.Now;
                 }
 
+                query.PositionStatus = editStatus.PositionStatus;
 
                 _dbContext.Update(query);
                 await _dbContext.SaveChangesAsync();
