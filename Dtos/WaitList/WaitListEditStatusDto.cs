@@ -11,6 +11,7 @@ namespace ListaEspera.Dtos.WaitList
     public class WaitListEditStatusDto
     {
         public int Id { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public PositionStatus PositionStatus { get; set; } 
     }
 }
