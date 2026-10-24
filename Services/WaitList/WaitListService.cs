@@ -186,8 +186,12 @@ namespace ListaEspera.Services.WaitList
                     return response;
                 }
 
-                query.PositionStatus = editStatus.PositionStatus;
-                query.ContactDate = DateTime.Now;
+                if(editStatus.PositionStatus == PositionStatus.Convidado)
+                {
+                    query.PositionStatus = editStatus.PositionStatus;
+                    query.ContactDate = DateTime.Now;
+                }
+
 
                 _dbContext.Update(query);
                 await _dbContext.SaveChangesAsync();
