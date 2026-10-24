@@ -47,6 +47,13 @@ namespace ListaEspera.Controllers
             var waitList = await _iWaitList.ListOfClassToPosition(classId, positionStatus);
             return Ok(waitList);
         }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PositionStatusUpdate(WaitListResponseDto waitListResponseDto)
+        {
+            var waitList = await _iWaitList.UpdatePositionStatus(waitListResponseDto);
+            return Ok(waitList);
+        }
         
     }
 }
