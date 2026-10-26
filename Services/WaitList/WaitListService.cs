@@ -38,7 +38,7 @@ namespace ListaEspera.Services.WaitList
                 if (dataDb.Count == 0)
                 {
                     response.Message = "Nenhum dados encontrados";
-                    response.Status = false;
+                    
                     return response;
                 }
 
