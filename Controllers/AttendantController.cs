@@ -22,8 +22,31 @@ namespace ListaEspera.Controllers
         [HttpPost("newAttendant")]
         public async Task<IActionResult> RegisterAttendant(AttendantDto attendantDto)
         {
-            var attendant = await _iAttendant.CreateAttendant(attendantDto);
-            return Ok(attendant);
+            
+            try
+            {
+                var attendant = await _iAttendant.CreateAttendant(attendantDto);
+
+                if(attendant == null)
+                {
+                    return BadRequest(new {message = "Ocorreu um erro interno ao cadastrar na lista."});
+                }
+
+                return StatusCode(StatusCodes.Status201Created, new
+                {
+                    message = "Cadastrado com sucesso",
+                    attendant
+                });
+                
+            }catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    mensagem = "Ocorreu um erro interno ao cadastrar na lista.",
+                    detalhe = ex.Message // Remova em produção por segurança
+                });
+            }
+            
         }
     }
 }

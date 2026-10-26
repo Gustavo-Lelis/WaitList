@@ -22,8 +22,31 @@ namespace ListaEspera.Controllers
          [HttpPost("newClient")]
         public async Task<IActionResult> RegisterClient(ClientDto clientDto)
         {
-            var client = await _iClientService.CreateClient(clientDto);
-            return Ok(client);
+            
+            try
+            {
+                var client = await _iClientService.CreateClient(clientDto);
+
+                if(client == null)
+                {
+                    return BadRequest(new {message = "Ocorreu um erro interno ao cadastrar cliente."});
+                }
+
+                return StatusCode(StatusCodes.Status201Created, new
+                {
+                    message = "Cadastrado com sucesso",
+                    client
+                });
+                
+            }catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    mensagem = "Ocorreu um erro interno ao cadastrar cliente.",
+                    detalhe = ex.Message // Remova em produção por segurança
+                });
+            }
+            
         }
     }
 }

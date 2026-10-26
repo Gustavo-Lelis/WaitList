@@ -23,8 +23,31 @@ namespace ListaEspera.Controllers
 
         public async Task<IActionResult> CreateModalitys(ModalityDto modalityDto)
         {
-            var modality = await _iModality.CreateModality(modalityDto);
-            return Ok(modality);
+            
+            try
+            {
+                var modality = await _iModality.CreateModality(modalityDto);
+
+                if(modality == null)
+                {
+                    return BadRequest(new {message = "Ocorreu um erro interno ao cadastrar modality."});
+                }
+
+                return StatusCode(StatusCodes.Status201Created, new
+                {
+                    message = "Cadastrado com sucesso",
+                    modality
+                });
+                
+            }catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    mensagem = "Ocorreu um erro interno ao cadastrar modalidade.",
+                    detalhe = ex.Message // Remova em produção por segurança
+                });
+            }
+            
         }
 
          [HttpGet]

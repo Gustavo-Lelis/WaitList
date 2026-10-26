@@ -22,8 +22,31 @@ namespace ListaEspera.Controllers
         [HttpPost("newClass")]
         public async Task<IActionResult> CreateClassGroup(ClassGroupDto classGroupDto)
         {
-            var classGroup = await _iClassGroup.CreateClass(classGroupDto);
-            return Ok(classGroup);
+            
+            try
+            {
+                var classGroup = await _iClassGroup.CreateClass(classGroupDto);
+
+                if(classGroup == null)
+                {
+                    return BadRequest(new {message = "Ocorreu um erro interno ao cadastrar turma."});
+                }
+
+                return StatusCode(StatusCodes.Status201Created, new
+                {
+                    message = "Cadastrado com sucesso",
+                    classGroup
+                });
+                
+            }catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    mensagem = "Ocorreu um erro interno ao cadastrar turma.",
+                    detalhe = ex.Message // Remova em produção por segurança
+                });
+            }
+            
         }
     }
 }
