@@ -6,7 +6,7 @@ namespace ListaEspera.Models.Enums
         Conflict = 409,
         NotFound = 404,
         BadRequest = 400,
-        ErroServer = 500
+        ErrorServer = 500
 
     }
 }

@@ -41,7 +41,7 @@ namespace ListaEspera.Services.Attendant
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
         }
@@ -69,7 +69,7 @@ namespace ListaEspera.Services.Attendant
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
         }

@@ -51,7 +51,7 @@ namespace ListaEspera.Services.WaitList
             catch (Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
         }
@@ -70,30 +70,31 @@ namespace ListaEspera.Services.WaitList
                     return response;
                 }
                 var clientResult = await _iClient.FindClientToId(waitListDto.ClientId);
-                if(clientResult.Status == ProcessedResults.BadRequest)
+                if(clientResult.Status == ProcessedResults.NotFound)
                 {
-                    response.Message = "Client Nao encontrado";
-                    response.Status = ProcessedResults.BadRequest;
+                    response.Message = clientResult.Message;
+                    response.Status = clientResult.Status;
                     return response;
                 }
                 waitList.Client = clientResult.Data;
                 waitList.ClientId = waitList.Client.Id;
 
                 var classResult = await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId);
-                if(classResult.Status == ProcessedResults.BadRequest)
+                if(classResult.Status == ProcessedResults.NotFound)
                 {
-                    response.Message = "Client Nao encontrado";
-                    response.Status = ProcessedResults.BadRequest;
+                    response.Message = clientResult.Message;
+                    response.Status = clientResult.Status;
                     return response;
                 }
                 waitList.ClassGroup = classResult.Data;
                 waitList.ClassGroupId = waitList.ClassGroup.Id;
 
                 var attendantResult = await _iAttendant.FindAttendantToId(waitListDto.AttendantId);
-                if(attendantResult.Status == ProcessedResults.BadRequest)
+                if(attendantResult.Status == ProcessedResults.NotFound)
                 {
-                    response.Message = "Client Nao encontrado";
-                    response.Status = ProcessedResults.BadRequest;
+                    response.Message = clientResult.Message;
+                    response.Status = clientResult.Status;
+                    return response;
                     return response;
                 }
                 waitList.Attendant = attendantResult.Data;
@@ -140,7 +141,7 @@ namespace ListaEspera.Services.WaitList
             catch (Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
         }
@@ -180,7 +181,7 @@ namespace ListaEspera.Services.WaitList
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
 
@@ -231,7 +232,7 @@ namespace ListaEspera.Services.WaitList
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
         }
