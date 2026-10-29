@@ -28,10 +28,9 @@ namespace ListaEspera.Controllers
             var classGroup = await _iClassGroup.CreateClass(classGroupDto);
             return classGroup.Status switch
             {
-                ProcessedResults.Ok => StatusCode(StatusCodes.Status200OK),
-                ProcessedResults.ErroServer => StatusCode(StatusCodes.Status500InternalServerError),
-                ProcessedResults.NotFound => StatusCode(StatusCodes.Status404NotFound),
-                _ => (IActionResult)classGroup,
+                ProcessedResults.Ok => Ok(classGroup),
+                ProcessedResults.NotFound => NotFound(classGroup),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, classGroup),
             };
         }
     }

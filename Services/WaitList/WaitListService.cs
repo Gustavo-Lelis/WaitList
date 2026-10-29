@@ -44,13 +44,13 @@ namespace ListaEspera.Services.WaitList
 
                 response.Data = dataDb;
                 response.Message = "Usuarios encontrados";
+                response.Status = ProcessedResults.Ok;
                 return response;
 
             }
             catch (Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }
@@ -113,6 +113,7 @@ namespace ListaEspera.Services.WaitList
 
                 response.Data = responseData;
                 response.Message = "Cliente cadastrado na lista";
+                response.Status = ProcessedResults.Ok;
                 return response;
 
 
@@ -120,7 +121,6 @@ namespace ListaEspera.Services.WaitList
             catch (Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }
@@ -162,13 +162,12 @@ namespace ListaEspera.Services.WaitList
 
                 response.Data = data;
                 response.Message = data?.Any() == true ? "Lista da turma encontrada" : "Lista não encontrada";
-
+                response.Status = ProcessedResults.Ok;
                 return response;
                 
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
 
@@ -212,13 +211,13 @@ namespace ListaEspera.Services.WaitList
 
                 response.Data = data;
                 response.Message = "Update Positon Status";
+                response.Status = ProcessedResults.Ok;
 
                 return response;
 
             }catch(HttpRequestException ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }

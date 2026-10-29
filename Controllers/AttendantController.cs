@@ -27,10 +27,9 @@ namespace ListaEspera.Controllers
             var attendant = await _iAttendant.CreateAttendant(attendantDto);
             return attendant.Status switch
             {
-                ProcessedResults.Ok => StatusCode(StatusCodes.Status200OK),
-                ProcessedResults.ErroServer => StatusCode(StatusCodes.Status500InternalServerError),
-                ProcessedResults.NotFound => StatusCode(StatusCodes.Status404NotFound),
-                _ => (IActionResult)attendant,
+                ProcessedResults.Ok => Ok(attendant),
+                ProcessedResults.NotFound => NotFound(attendant),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, attendant),
             };
 
         }

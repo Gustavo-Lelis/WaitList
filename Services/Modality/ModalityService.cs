@@ -35,13 +35,14 @@ namespace ListaEspera.Services.Modality
 
                 response.Data = modality;
                 response.Message = "Create Modality with Sucess";
+                response.Status = ProcessedResults.Ok;
 
                 return response;
                 
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                
                 return response; 
             }
         }
@@ -62,13 +63,14 @@ namespace ListaEspera.Services.Modality
                 }
 
                 response.Data = datadb;
-                response.Message = "List lista encontrada com sucesso ";         
+                response.Message = "List lista encontrada com sucesso "; 
+                response.Status = ProcessedResults.Ok;        
                        
                 return response;
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                
                 return response;
             }
         }
@@ -85,6 +87,7 @@ namespace ListaEspera.Services.Modality
                 {
                     response.Message = "Nenhuma modalidade encontrado";
                     response.Status = ProcessedResults.NotFound;
+                    response.Status = ProcessedResults.Ok;
                     return response;
                 }
 
@@ -95,7 +98,7 @@ namespace ListaEspera.Services.Modality
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                
                 return response;
             }
         }

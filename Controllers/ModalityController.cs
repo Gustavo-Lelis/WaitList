@@ -26,12 +26,11 @@ namespace ListaEspera.Controllers
         {
    
             var modality = await _iModality.CreateModality(modalityDto);
-            return modality.Status switch
+             return modality.Status switch
             {
-                ProcessedResults.Ok => StatusCode(StatusCodes.Status200OK),
-                ProcessedResults.ErroServer => StatusCode(StatusCodes.Status500InternalServerError),
-                ProcessedResults.NotFound => StatusCode(StatusCodes.Status404NotFound),
-                _ => (IActionResult)modality,
+                ProcessedResults.Ok => Ok(modality),
+                ProcessedResults.NotFound => NotFound(modality),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, modality),
             };
     
             
@@ -43,10 +42,9 @@ namespace ListaEspera.Controllers
             var modality = await _iModality.ListModality();
             return modality.Status switch
             {
-                ProcessedResults.Ok => StatusCode(StatusCodes.Status200OK),
-                ProcessedResults.ErroServer => StatusCode(StatusCodes.Status500InternalServerError),
-                ProcessedResults.NotFound => StatusCode(StatusCodes.Status404NotFound),
-                _ => (IActionResult)modality,
+                ProcessedResults.Ok => Ok(modality),
+                ProcessedResults.NotFound => NotFound(modality),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, modality),
             };
         }
 

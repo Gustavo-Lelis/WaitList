@@ -27,16 +27,12 @@ namespace ListaEspera.Controllers
           
             var client = await _iClientService.CreateClient(clientDto);
             
-            return client.Status switch
+             return client.Status switch
             {
-                ProcessedResults.Ok => StatusCode(StatusCodes.Status200OK),
-                ProcessedResults.ErroServer => StatusCode(StatusCodes.Status500InternalServerError),
-                ProcessedResults.NotFound => StatusCode(StatusCodes.Status404NotFound),
-                _ => (IActionResult)client,
-            };
-
-                
-                
+                ProcessedResults.Ok => Ok(client),
+                ProcessedResults.NotFound => NotFound(client),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, client),
+            };    
             
         }
     }

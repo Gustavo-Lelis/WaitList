@@ -33,13 +33,14 @@ namespace ListaEspera.Services.Client
 
                 response.Data = client;
                 response.Message = "Client Create with Sucess";
+                response.Status = ProcessedResults.Ok;
 
                 return response;
             }
             catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                
                 return response;
             }
         }
@@ -61,12 +62,13 @@ namespace ListaEspera.Services.Client
 
                 response.Data = data;
                 response.Message = "Cliiente encontrado";
+                response.Status = ProcessedResults.Ok;
                 return response;
                 
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = ProcessedResults.ErroServer;
+                
                 return response;
             }
         }

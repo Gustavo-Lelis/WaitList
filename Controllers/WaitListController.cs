@@ -34,10 +34,9 @@ namespace ListaEspera.Controllers
             var waitList = await _iWaitList.AllUserModality();
             return waitList.Status switch
             {
-                ProcessedResults.Ok => StatusCode(StatusCodes.Status200OK),
-                ProcessedResults.ErroServer => StatusCode(StatusCodes.Status500InternalServerError),
-                ProcessedResults.NotFound => StatusCode(StatusCodes.Status404NotFound),
-                _ => (IActionResult)waitList,
+                ProcessedResults.Ok => Ok(waitList),
+                ProcessedResults.NotFound => NotFound(waitList),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, waitList),
             };
         }
 
@@ -47,13 +46,11 @@ namespace ListaEspera.Controllers
         {
            
             var waitList = await _iWaitList.RegisterUser(waitListDto);
-             return waitList.Status switch
+            return waitList.Status switch
             {
-                ProcessedResults.Ok => StatusCode(StatusCodes.Status200OK),
-                ProcessedResults.Conflict => StatusCode(StatusCodes.Status409Conflict),
-                ProcessedResults.ErroServer => StatusCode(StatusCodes.Status500InternalServerError),
-                ProcessedResults.NotFound => StatusCode(StatusCodes.Status404NotFound),
-                _ => (IActionResult)waitList,
+                ProcessedResults.Ok => Ok(waitList),
+                ProcessedResults.NotFound => NotFound(waitList),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, waitList),
             };
   
         }   
@@ -64,12 +61,11 @@ namespace ListaEspera.Controllers
         {
         
             var waitList = await _iWaitList.ListOfClassToPosition(classId, positionStatus);
-             return waitList.Status switch
+            return waitList.Status switch
             {
-                ProcessedResults.Ok => StatusCode(StatusCodes.Status200OK),
-                ProcessedResults.ErroServer => StatusCode(StatusCodes.Status500InternalServerError),
-                ProcessedResults.NotFound => StatusCode(StatusCodes.Status404NotFound),
-                _ => (IActionResult)waitList,
+                ProcessedResults.Ok => Ok(waitList),
+                ProcessedResults.NotFound => NotFound(waitList),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, waitList),
             };
             
         }
@@ -79,12 +75,11 @@ namespace ListaEspera.Controllers
         {
             var waitList = await _iWaitList.UpdatePositionStatus(waitListEditStatusDto);
 
-            return waitList.Status switch
+             return waitList.Status switch
             {
-                ProcessedResults.Ok => StatusCode(StatusCodes.Status200OK),
-                ProcessedResults.ErroServer => StatusCode(StatusCodes.Status500InternalServerError),
-                ProcessedResults.NotFound => StatusCode(StatusCodes.Status404NotFound),
-                _ => (IActionResult)waitList,
+                ProcessedResults.Ok => Ok(waitList),
+                ProcessedResults.NotFound => NotFound(waitList),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, waitList),
             };
                 
         }
