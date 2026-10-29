@@ -70,7 +70,7 @@ namespace ListaEspera.Services.WaitList
                     return response;
                 }
                 var clientResult = await _iClient.FindClientToId(waitListDto.ClientId);
-                if(clientResult.Status == ProcessedResults.NotFound || clientResult.Status == ProcessedResults.ErrorServer))
+                if(clientResult.Status == ProcessedResults.NotFound || clientResult.Status == ProcessedResults.ErrorServer)
                 {
                     response.Message = clientResult.Message;
                     response.Status = clientResult.Status;
@@ -90,12 +90,12 @@ namespace ListaEspera.Services.WaitList
                 waitList.ClassGroupId = waitList.ClassGroup.Id;
 
                 var attendantResult = await _iAttendant.FindAttendantToId(waitListDto.AttendantId);
-                if(attendantResult.Status == ProcessedResults.NotFound || attendantResult.Status == ProcessedResults.ErrorServer))
+                if(attendantResult.Status == ProcessedResults.NotFound || attendantResult.Status == ProcessedResults.ErrorServer)
                 {
                     response.Message = attendantResult.Message;
                     response.Status = attendantResult.Status;
                     return response;
-                    return response;
+                    
                 }
                 waitList.Attendant = attendantResult.Data;
                 waitList.AttendantId = waitList.Attendant.Id;
