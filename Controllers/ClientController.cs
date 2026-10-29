@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ListaEspera.Dtos;
+using ListaEspera.Models.Enums;
 using ListaEspera.Services.Client;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,29 +24,19 @@ namespace ListaEspera.Controllers
         public async Task<IActionResult> RegisterClient(ClientDto clientDto)
         {
             
-            try
+          
+            var client = await _iClientService.CreateClient(clientDto);
+            
+            return client.Status switch
             {
-                var client = await _iClientService.CreateClient(clientDto);
+                ProcessedResults.Ok => StatusCode(StatusCodes.Status200OK),
+                ProcessedResults.ErroServer => StatusCode(StatusCodes.Status500InternalServerError),
+                ProcessedResults.NotFound => StatusCode(StatusCodes.Status404NotFound),
+                _ => (IActionResult)client,
+            };
 
-                if(client == null)
-                {
-                    return BadRequest(new {message = "Ocorreu um erro interno ao cadastrar cliente."});
-                }
-
-                return StatusCode(StatusCodes.Status201Created, new
-                {
-                    message = "Cadastrado com sucesso",
-                    client
-                });
                 
-            }catch(Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    mensagem = "Ocorreu um erro interno ao cadastrar cliente.",
-                    detalhe = ex.Message // Remova em produção por segurança
-                });
-            }
+                
             
         }
     }

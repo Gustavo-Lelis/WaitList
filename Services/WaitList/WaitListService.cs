@@ -38,7 +38,7 @@ namespace ListaEspera.Services.WaitList
                 if (dataDb.Count == 0)
                 {
                     response.Message = "Nenhum dados encontrados";
-                    
+                    response.Status = ProcessedResults.NotFound;
                     return response;
                 }
 
@@ -152,6 +152,13 @@ namespace ListaEspera.Services.WaitList
                 .ProjectToDto()
                 .OrderBy(c => c.CreationDate)
                 .ToListAsync();
+
+                if(data == null)
+                {
+                    response.Message = "Lista não encontrada";
+                    response.Status = ProcessedResults.NotFound;
+                    return response;
+                }
 
                 response.Data = data;
                 response.Message = data?.Any() == true ? "Lista da turma encontrada" : "Lista não encontrada";

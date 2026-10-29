@@ -10,6 +10,6 @@ namespace ListaEspera.Models
     {
         public T? Data { get; set; }
         public string Message { get; set; } = string.Empty;
-        public ProcessedResults Status { get; set; }
+        public ProcessedResults Status { get; set; } = ProcessedResults.Ok;
     }
 }
