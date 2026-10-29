@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ListaEspera.Dtos;
 using ListaEspera.Models;
+using ListaEspera.Models.Enums;
 
 namespace ListaEspera.Services.Modality
 {
@@ -40,7 +41,7 @@ namespace ListaEspera.Services.Modality
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response; 
             }
         }
@@ -56,7 +57,7 @@ namespace ListaEspera.Services.Modality
                 if(datadb.Count == 0)
                 {
                     response.Message = "Nenhum dados encontrados";
-                    response.Status = false;
+                    response.Status = ProcessedResults.NotFound;
                     return response;
                 }
 
@@ -67,7 +68,7 @@ namespace ListaEspera.Services.Modality
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }
@@ -83,7 +84,7 @@ namespace ListaEspera.Services.Modality
                 if(data == null)
                 {
                     response.Message = "Nenhuma modalidade encontrado";
-                    response.Status = false;
+                    response.Status = ProcessedResults.NotFound;
                     return response;
                 }
 
@@ -94,7 +95,7 @@ namespace ListaEspera.Services.Modality
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }

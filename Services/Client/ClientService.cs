@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ListaEspera.Dtos;
 using ListaEspera.Models;
+using ListaEspera.Models.Enums;
 
 namespace ListaEspera.Services.Client
 {
@@ -38,7 +39,7 @@ namespace ListaEspera.Services.Client
             catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }
@@ -54,7 +55,7 @@ namespace ListaEspera.Services.Client
                 if(data == null)
                 {
                     response.Message = "Nenhum usuario encontrado";
-                    response.Status = false;
+                    response.Status = ProcessedResults.NotFound;
                     return response;
                 }
 
@@ -65,7 +66,7 @@ namespace ListaEspera.Services.Client
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }

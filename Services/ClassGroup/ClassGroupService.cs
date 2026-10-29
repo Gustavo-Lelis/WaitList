@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ListaEspera.Dtos;
 using ListaEspera.Models;
+using ListaEspera.Models.Enums;
 
 namespace ListaEspera.Services.ClassGroup
 {
@@ -45,7 +46,7 @@ namespace ListaEspera.Services.ClassGroup
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response; 
             }
         }
@@ -61,7 +62,7 @@ namespace ListaEspera.Services.ClassGroup
                 if(data == null)
                 {
                     response.Message = "Nenhuma turma encontrado";
-                    response.Status = false;
+                    response.Status = ProcessedResults.NotFound;
                     return response;
                 }
 
@@ -72,7 +73,7 @@ namespace ListaEspera.Services.ClassGroup
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }

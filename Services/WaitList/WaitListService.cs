@@ -50,7 +50,7 @@ namespace ListaEspera.Services.WaitList
             catch (Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }
@@ -65,7 +65,7 @@ namespace ListaEspera.Services.WaitList
                 if (await ClientValidateClassGroup(waitListDto.ClientId, waitListDto.ClassGroupId))
                 {
                     response.Message = "Usuario ja Cadastrado ";
-                    response.Status = false;
+                    response.Status = ProcessedResults.Conflict;
                     return response;
                 }
                 var clientResult = EntityValidate(await _iClient.FindClientToId(waitListDto.ClientId), "Client");
@@ -120,7 +120,7 @@ namespace ListaEspera.Services.WaitList
             catch (Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }
@@ -161,7 +161,7 @@ namespace ListaEspera.Services.WaitList
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
 
@@ -182,7 +182,7 @@ namespace ListaEspera.Services.WaitList
                 if(query == null)
                 {
                     response.Message = "Usuario não localizado";
-                    response.Status = false;
+                    response.Status = ProcessedResults.NotFound;
                     return response;
                 }
 
@@ -208,10 +208,10 @@ namespace ListaEspera.Services.WaitList
 
                 return response;
 
-            }catch(Exception ex)
+            }catch(HttpRequestException ex)
             {
                 response.Message = ex.Message;
-                response.Status = false;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }
