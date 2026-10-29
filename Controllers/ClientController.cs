@@ -29,11 +29,27 @@ namespace ListaEspera.Controllers
             
              return client.Status switch
             {
-                ProcessedResults.Ok => Ok(client),
+                ProcessedResults.Ok => CreatedAtAction(
+                    nameof(GetClientToId),
+                    new { client.Data!.Id},
+                    client
+                ),
                 ProcessedResults.NotFound => NotFound(client),
                 _ => StatusCode(StatusCodes.Status500InternalServerError, client),
             };    
             
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetClientToId(int id)
+        {
+            var client = await _iClientService.FindClientToId(id);
+            return client.Status switch
+            {
+                ProcessedResults.Ok => Ok(client),
+                ProcessedResults.NotFound => NotFound(client),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, client),
+            };
         }
     }
 }

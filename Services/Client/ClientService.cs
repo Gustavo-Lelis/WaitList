@@ -33,7 +33,7 @@ namespace ListaEspera.Services.Client
 
                 response.Data = client;
                 response.Message = "Client Create with Sucess";
-                
+                response.Status = ProcessedResults.Created;
 
                 return response;
             }

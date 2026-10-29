@@ -48,7 +48,11 @@ namespace ListaEspera.Controllers
             var waitList = await _iWaitList.RegisterUser(waitListDto);
             return waitList.Status switch
             {
-                ProcessedResults.Ok => Ok(waitList),
+                ProcessedResults.Ok => CreatedAtAction(
+                    nameof(GetRegisterToId),
+                    new {id = waitList.Data!.Id},
+                    waitList
+                ),
                 ProcessedResults.NotFound => NotFound(waitList),
                 ProcessedResults.Conflict => Conflict(waitList),
                 _ => StatusCode(StatusCodes.Status500InternalServerError, waitList),
@@ -58,7 +62,7 @@ namespace ListaEspera.Controllers
           
 
         [HttpGet("ListaDeTurmas")]
-        public async Task<IActionResult> getListToClass(int classId, PositionStatus positionStatus)
+        public async Task<IActionResult> GetListToClass(int classId, PositionStatus positionStatus)
         {
         
             var waitList = await _iWaitList.ListOfClassToPosition(classId, positionStatus);
@@ -83,6 +87,18 @@ namespace ListaEspera.Controllers
                 _ => StatusCode(StatusCodes.Status500InternalServerError, waitList),
             };
                 
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRegisterToId(int id)
+        {
+            var waitList = await _iWaitList.FindRegisterToId(id);
+            return waitList.Status switch
+            {
+                ProcessedResults.Ok => Ok(waitList),
+                ProcessedResults.NotFound => NotFound(waitList),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, waitList),
+            };
         }
 
     }

@@ -27,11 +27,27 @@ namespace ListaEspera.Controllers
             var attendant = await _iAttendant.CreateAttendant(attendantDto);
             return attendant.Status switch
             {
-                ProcessedResults.Ok => Ok(attendant),
+                ProcessedResults.Ok =>CreatedAtAction(
+                    nameof(GetAttenddantToId),
+                    new{id = attendant.Data!.Id},
+                    attendant
+                ),
                 ProcessedResults.NotFound => NotFound(attendant),
                 _ => StatusCode(StatusCodes.Status500InternalServerError, attendant),
             };
 
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAttenddantToId(int id)
+        {
+            var attendant = await _iAttendant.FindAttendantToId(id);
+            return attendant.Status switch
+            {
+                ProcessedResults.Ok => Ok(attendant),
+                ProcessedResults.NotFound => NotFound(attendant),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, attendant),
+            };
         }
     }
 }

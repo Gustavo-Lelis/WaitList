@@ -29,6 +29,7 @@ namespace ListaEspera.Controllers
              return modality.Status switch
             {
                 ProcessedResults.Ok => Ok(modality),
+                ProcessedResults.Created => CreatedAtAction(nameof(GetModalityToId), new { id = modality.Data!.Id}, modality),
                 ProcessedResults.NotFound => NotFound(modality),
                 _ => StatusCode(StatusCodes.Status500InternalServerError, modality),
             };
@@ -36,10 +37,22 @@ namespace ListaEspera.Controllers
             
         }
 
-         [HttpGet]
-        public async Task<IActionResult> getModality()
+        [HttpGet]
+        public async Task<IActionResult> GetModality()
         {
             var modality = await _iModality.ListModality();
+            return modality.Status switch
+            {
+                ProcessedResults.Ok => Ok(modality),
+                ProcessedResults.NotFound => NotFound(modality),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, modality),
+            };
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetModalityToId(int id)
+        {
+            var modality = await _iModality.FindModalityToId(id);
             return modality.Status switch
             {
                 ProcessedResults.Ok => Ok(modality),

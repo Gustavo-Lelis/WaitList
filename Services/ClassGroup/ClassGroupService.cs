@@ -40,7 +40,7 @@ namespace ListaEspera.Services.ClassGroup
 
                 response.Data = classGroup;
                 response.Message = "Create Class with Sucessed";
-                
+                response.Status = ProcessedResults.Created;
 
                 return response;
                 

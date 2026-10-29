@@ -133,6 +133,7 @@ namespace ListaEspera.Services.WaitList
 
                 response.Data = responseData;
                 response.Message = "Cliente cadastrado na lista";
+                response.Status = ProcessedResults.Created;
                 
                 return response;
 
@@ -166,9 +167,9 @@ namespace ListaEspera.Services.WaitList
                 .OrderBy(c => c.CreationDate)
                 .ToListAsync();
 
-                if(data == null)
+                if(data.Count == 0)
                 {
-                    response.Message = "Lista não encontrada";
+                    response.Message = "Lista vazia";
                     response.Status = ProcessedResults.NotFound;
                     return response;
                 }
@@ -229,6 +230,63 @@ namespace ListaEspera.Services.WaitList
 
                 return response;
 
+            }catch(Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = ProcessedResults.ErrorServer;
+                return response;
+            }
+        }
+
+        public async Task<ResponseModel<WaitListResponseDto>> FindRegisterToId(int id)
+        {
+           ResponseModel<WaitListResponseDto> response = new ResponseModel<WaitListResponseDto>();
+
+            try
+            {
+                var data = await _dbContext.WaitLists.FindAsync(id);
+
+                if(data == null)
+                {
+                    response.Message = "Nenhum resgistro encontrado";
+                    response.Status = ProcessedResults.NotFound;
+                    
+                    return response;
+                }
+
+                 WaitListResponseDto responseData = new WaitListResponseDto
+                {
+                    Id = data.Id,
+
+                    // Dados da FK ClassGroup
+                    ClassGroupName = data.ClassGroup.Name,
+                    ClassGroupCode = data.ClassGroup.Code,
+                    ClassGroupDays = data.ClassGroup.Days,
+                    ClassGroupClassTimeTable = data.ClassGroup.ClassTimeTable,
+                    ClassGroupMinAge = data.ClassGroup.MinAge,
+                    ClassGroupMaxAge = data.ClassGroup.MaxAge,
+                    ClassGroupYear = data.ClassGroup.Year,
+
+                    // Dados da FK Client
+                    ClientCpf = data.Client.Cpf,
+                    ClientName = data.Client.Name,
+                    ClientContactNumber = data.Client.Contato,
+
+                    // Dados da FK Attendant
+                    AttendantName = data.Attendant.Name,
+
+                    ClientCredential = data.Credential,
+                    ClientPositionStatus = data.PositionStatus,
+                    CreationDate = data.CreationDate
+                };
+
+
+                response.Data = responseData;
+                response.Message = "Registro encontrado";
+                response.Status = ProcessedResults.Ok;
+                
+                return response;
+                
             }catch(Exception ex)
             {
                 response.Message = ex.Message;

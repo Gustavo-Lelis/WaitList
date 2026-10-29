@@ -28,6 +28,22 @@ namespace ListaEspera.Controllers
             var classGroup = await _iClassGroup.CreateClass(classGroupDto);
             return classGroup.Status switch
             {
+                ProcessedResults.Ok => CreatedAtAction(
+                    nameof(GetClassGroupToId),
+                    new{id = classGroup.Data!.Id},
+                    classGroup
+                ),
+                ProcessedResults.NotFound => NotFound(classGroup),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, classGroup),
+            };
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetClassGroupToId(int id)
+        {
+            var classGroup = await _iClassGroup.FindClassGroupToId(id);
+            return classGroup.Status switch
+            {
                 ProcessedResults.Ok => Ok(classGroup),
                 ProcessedResults.NotFound => NotFound(classGroup),
                 _ => StatusCode(StatusCodes.Status500InternalServerError, classGroup),

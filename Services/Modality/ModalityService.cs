@@ -35,7 +35,7 @@ namespace ListaEspera.Services.Modality
 
                 response.Data = modality;
                 response.Message = "Create Modality with Sucess";
-                
+                response.Status = ProcessedResults.Created;
 
                 return response;
                 
@@ -93,7 +93,7 @@ namespace ListaEspera.Services.Modality
 
                 response.Data = data;
                 response.Message = "Modalidade encontrado";
-                
+                response.Status = ProcessedResults.Ok;
                 return response;
                 
             }catch(Exception ex)

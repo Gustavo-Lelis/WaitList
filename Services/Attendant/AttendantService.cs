@@ -33,7 +33,7 @@ namespace ListaEspera.Services.Attendant
 
                 response.Data = attendant;
                 response.Message = "Create Attendant With Sucessed";
-                
+                response.Status = ProcessedResults.Created;
 
                 return response;
                 
