@@ -82,8 +82,8 @@ namespace ListaEspera.Services.WaitList
                 var classResult = await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId);
                 if(classResult.Status == ProcessedResults.NotFound)
                 {
-                    response.Message = clientResult.Message;
-                    response.Status = clientResult.Status;
+                    response.Message = classResult.Message;
+                    response.Status = classResult.Status;
                     return response;
                 }
                 waitList.ClassGroup = classResult.Data;
@@ -92,8 +92,8 @@ namespace ListaEspera.Services.WaitList
                 var attendantResult = await _iAttendant.FindAttendantToId(waitListDto.AttendantId);
                 if(attendantResult.Status == ProcessedResults.NotFound)
                 {
-                    response.Message = clientResult.Message;
-                    response.Status = clientResult.Status;
+                    response.Message = attendantResult.Message;
+                    response.Status = attendantResult.Status;
                     return response;
                     return response;
                 }
