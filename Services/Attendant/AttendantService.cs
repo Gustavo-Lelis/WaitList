@@ -33,7 +33,7 @@ namespace ListaEspera.Services.Attendant
 
                 response.Data = attendant;
                 response.Message = "Create Attendant With Sucessed";
-                response.Status = ProcessedResults.Ok;
+                
 
                 return response;
                 
@@ -41,7 +41,7 @@ namespace ListaEspera.Services.Attendant
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }
@@ -63,13 +63,13 @@ namespace ListaEspera.Services.Attendant
 
                 response.Data = data;
                 response.Message = "attedant  encontrado";
-                response.Status = ProcessedResults.Ok;
+                
                 return response;
                 
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }

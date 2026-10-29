@@ -44,13 +44,14 @@ namespace ListaEspera.Services.WaitList
 
                 response.Data = dataDb;
                 response.Message = "Usuarios encontrados";
-                response.Status = ProcessedResults.Ok;
+                
                 return response;
 
             }
             catch (Exception ex)
             {
                 response.Message = ex.Message;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }
@@ -68,16 +69,34 @@ namespace ListaEspera.Services.WaitList
                     response.Status = ProcessedResults.Conflict;
                     return response;
                 }
-                var clientResult = EntityValidate(await _iClient.FindClientToId(waitListDto.ClientId), "Client");
-                waitList.Client = clientResult;
+                var clientResult = await _iClient.FindClientToId(waitListDto.ClientId);
+                if(clientResult.Status == ProcessedResults.BadRequest)
+                {
+                    response.Message = "Client Nao encontrado";
+                    response.Status = ProcessedResults.BadRequest;
+                    return response;
+                }
+                waitList.Client = clientResult.Data;
                 waitList.ClientId = waitList.Client.Id;
 
-                var classResult = EntityValidate(await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId), "Class Group");
-                waitList.ClassGroup = classResult;
+                var classResult = await _iClassGroup.FindClassGroupToId(waitListDto.ClassGroupId);
+                if(classResult.Status == ProcessedResults.BadRequest)
+                {
+                    response.Message = "Client Nao encontrado";
+                    response.Status = ProcessedResults.BadRequest;
+                    return response;
+                }
+                waitList.ClassGroup = classResult.Data;
                 waitList.ClassGroupId = waitList.ClassGroup.Id;
 
-                var attendantResult = EntityValidate(await _iAttendant.FindAttendantToId(waitListDto.AttendantId), "Attedant");
-                waitList.Attendant = attendantResult;
+                var attendantResult = await _iAttendant.FindAttendantToId(waitListDto.AttendantId);
+                if(attendantResult.Status == ProcessedResults.BadRequest)
+                {
+                    response.Message = "Client Nao encontrado";
+                    response.Status = ProcessedResults.BadRequest;
+                    return response;
+                }
+                waitList.Attendant = attendantResult.Data;
                 waitList.AttendantId = waitList.Attendant.Id;
 
                 waitList.Credential = waitListDto.Credential;
@@ -113,7 +132,7 @@ namespace ListaEspera.Services.WaitList
 
                 response.Data = responseData;
                 response.Message = "Cliente cadastrado na lista";
-                response.Status = ProcessedResults.Ok;
+                
                 return response;
 
 
@@ -121,19 +140,12 @@ namespace ListaEspera.Services.WaitList
             catch (Exception ex)
             {
                 response.Message = ex.Message;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }
 
-        private static T EntityValidate<T>(ResponseModel<T> response, string entityName)
-        {
-            if (response == null || response.Data == null)
-            {
-                throw new InvalidOperationException($"{entityName} não encontrado.");
-            }
-
-            return response.Data;
-        }
+        
 
         private async Task<bool> ClientValidateClassGroup(int clientId, int classGroupId)
         {
@@ -162,12 +174,13 @@ namespace ListaEspera.Services.WaitList
 
                 response.Data = data;
                 response.Message = data?.Any() == true ? "Lista da turma encontrada" : "Lista não encontrada";
-                response.Status = ProcessedResults.Ok;
+                
                 return response;
                 
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
 
@@ -211,13 +224,14 @@ namespace ListaEspera.Services.WaitList
 
                 response.Data = data;
                 response.Message = "Update Positon Status";
-                response.Status = ProcessedResults.Ok;
+                
 
                 return response;
 
-            }catch(HttpRequestException ex)
+            }catch(Exception ex)
             {
                 response.Message = ex.Message;
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }

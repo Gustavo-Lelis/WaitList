@@ -40,14 +40,14 @@ namespace ListaEspera.Services.ClassGroup
 
                 response.Data = classGroup;
                 response.Message = "Create Class with Sucessed";
-                response.Status = ProcessedResults.Ok;
+                
 
                 return response;
                 
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                
+                response.Status = ProcessedResults.ErroServer;
                 return response; 
             }
         }
@@ -69,13 +69,13 @@ namespace ListaEspera.Services.ClassGroup
 
                 response.Data = data;
                 response.Message = "Turma encontrado";
-                response.Status = ProcessedResults.Ok;
+                
                 return response;
                 
             }catch(Exception ex)
             {
                 response.Message = ex.Message;
-                
+                response.Status = ProcessedResults.ErroServer;
                 return response;
             }
         }

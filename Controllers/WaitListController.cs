@@ -50,6 +50,7 @@ namespace ListaEspera.Controllers
             {
                 ProcessedResults.Ok => Ok(waitList),
                 ProcessedResults.NotFound => NotFound(waitList),
+                ProcessedResults.Conflict => Conflict(waitList),
                 _ => StatusCode(StatusCodes.Status500InternalServerError, waitList),
             };
   
