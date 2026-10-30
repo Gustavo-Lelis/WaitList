@@ -244,7 +244,9 @@ namespace ListaEspera.Services.WaitList
 
             try
             {
-                var data = await _dbContext.WaitLists.FindAsync(id);
+                var data = await _dbContext.WaitLists
+                    .ProjectToDto()
+                    .FirstOrDefaultAsync(waitList => waitList.Id == id);
 
                 if(data == null)
                 {
@@ -254,34 +256,8 @@ namespace ListaEspera.Services.WaitList
                     return response;
                 }
 
-                 WaitListResponseDto responseData = new WaitListResponseDto
-                {
-                    Id = data.Id,
 
-                    // Dados da FK ClassGroup
-                    ClassGroupName = data.ClassGroup.Name,
-                    ClassGroupCode = data.ClassGroup.Code,
-                    ClassGroupDays = data.ClassGroup.Days,
-                    ClassGroupClassTimeTable = data.ClassGroup.ClassTimeTable,
-                    ClassGroupMinAge = data.ClassGroup.MinAge,
-                    ClassGroupMaxAge = data.ClassGroup.MaxAge,
-                    ClassGroupYear = data.ClassGroup.Year,
-
-                    // Dados da FK Client
-                    ClientCpf = data.Client.Cpf,
-                    ClientName = data.Client.Name,
-                    ClientContactNumber = data.Client.Contato,
-
-                    // Dados da FK Attendant
-                    AttendantName = data.Attendant.Name,
-
-                    ClientCredential = data.Credential,
-                    ClientPositionStatus = data.PositionStatus,
-                    CreationDate = data.CreationDate
-                };
-
-
-                response.Data = responseData;
+                response.Data = data;
                 response.Message = "Registro encontrado";
                 response.Status = ProcessedResults.Ok;
                 

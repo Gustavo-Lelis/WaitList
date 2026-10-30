@@ -27,7 +27,7 @@ namespace ListaEspera.Controllers
             var attendant = await _iAttendant.CreateAttendant(attendantDto);
             return attendant.Status switch
             {
-                ProcessedResults.Ok =>CreatedAtAction(
+                ProcessedResults.Created =>CreatedAtAction(
                     nameof(GetAttenddantToId),
                     new{id = attendant.Data!.Id},
                     attendant

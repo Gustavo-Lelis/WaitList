@@ -28,7 +28,7 @@ namespace ListaEspera.Controllers
             var modality = await _iModality.CreateModality(modalityDto);
              return modality.Status switch
             {
-                ProcessedResults.Ok => Ok(modality),
+                
                 ProcessedResults.Created => CreatedAtAction(nameof(GetModalityToId), new { id = modality.Data!.Id}, modality),
                 ProcessedResults.NotFound => NotFound(modality),
                 _ => StatusCode(StatusCodes.Status500InternalServerError, modality),

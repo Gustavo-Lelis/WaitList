@@ -28,7 +28,7 @@ namespace ListaEspera.Controllers
             var classGroup = await _iClassGroup.CreateClass(classGroupDto);
             return classGroup.Status switch
             {
-                ProcessedResults.Ok => CreatedAtAction(
+                ProcessedResults.Created => CreatedAtAction(
                     nameof(GetClassGroupToId),
                     new{id = classGroup.Data!.Id},
                     classGroup

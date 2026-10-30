@@ -29,9 +29,9 @@ namespace ListaEspera.Controllers
             
              return client.Status switch
             {
-                ProcessedResults.Ok => CreatedAtAction(
+                ProcessedResults.Created => CreatedAtAction(
                     nameof(GetClientToId),
-                    new { client.Data!.Id},
+                    new { id = client.Data!.Id},
                     client
                 ),
                 ProcessedResults.NotFound => NotFound(client),

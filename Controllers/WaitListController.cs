@@ -48,7 +48,7 @@ namespace ListaEspera.Controllers
             var waitList = await _iWaitList.RegisterUser(waitListDto);
             return waitList.Status switch
             {
-                ProcessedResults.Ok => CreatedAtAction(
+                ProcessedResults.Created => CreatedAtAction(
                     nameof(GetRegisterToId),
                     new {id = waitList.Data!.Id},
                     waitList
