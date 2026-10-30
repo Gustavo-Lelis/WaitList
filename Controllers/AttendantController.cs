@@ -28,7 +28,7 @@ namespace ListaEspera.Controllers
             return attendant.Status switch
             {
                 ProcessedResults.Created =>CreatedAtAction(
-                    nameof(GetAttenddantToId),
+                    nameof(GetAttendantToId),
                     new{id = attendant.Data!.Id},
                     attendant
                 ),
@@ -39,7 +39,7 @@ namespace ListaEspera.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAttenddantToId(int id)
+        public async Task<IActionResult> GetAttendantToId(int id)
         {
             var attendant = await _iAttendant.FindAttendantToId(id);
             return attendant.Status switch

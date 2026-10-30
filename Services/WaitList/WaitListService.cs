@@ -105,32 +105,10 @@ namespace ListaEspera.Services.WaitList
                 _dbContext.Add(waitList);
                 await _dbContext.SaveChangesAsync();
 
-                WaitListResponseDto responseData = new WaitListResponseDto
-                {
-                    Id = waitList.Id,
-
-                    // Dados da FK ClassGroup
-                    ClassGroupName = waitList.ClassGroup.Name,
-                    ClassGroupCode = waitList.ClassGroup.Code,
-                    ClassGroupDays = waitList.ClassGroup.Days,
-                    ClassGroupClassTimeTable = waitList.ClassGroup.ClassTimeTable,
-                    ClassGroupMinAge = waitList.ClassGroup.MinAge,
-                    ClassGroupMaxAge = waitList.ClassGroup.MaxAge,
-                    ClassGroupYear = waitList.ClassGroup.Year,
-
-                    // Dados da FK Client
-                    ClientCpf = waitList.Client.Cpf,
-                    ClientName = waitList.Client.Name,
-                    ClientContactNumber = waitList.Client.Contato,
-
-                    // Dados da FK Attendant
-                    AttendantName = waitList.Attendant.Name,
-
-                    ClientCredential = waitList.Credential,
-                    ClientPositionStatus = waitList.PositionStatus,
-                    CreationDate = waitList.CreationDate
-                };
-
+               var responseData = await _dbContext.WaitLists
+                    .ProjectToDto()
+                    .FirstOrDefaultAsync(c => c.Id == waitList.Id); 
+                    
                 response.Data = responseData;
                 response.Message = "Cliente cadastrado na lista";
                 response.Status = ProcessedResults.Created;
