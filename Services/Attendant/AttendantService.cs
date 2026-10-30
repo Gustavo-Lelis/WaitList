@@ -11,10 +11,12 @@ namespace ListaEspera.Services.Attendant
     public class AttendantService : IAttendantService
     {
         private readonly AppDbContext _dbContext;
+        private readonly ILogger<AttendantService> _logger;
 
-        public AttendantService(AppDbContext dbContext)
+        public AttendantService(AppDbContext dbContext, ILogger<AttendantService> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<ResponseModel<AttendantModel>> CreateAttendant(AttendantDto attendantDto)
@@ -38,9 +40,11 @@ namespace ListaEspera.Services.Attendant
                 return response;
                 
                 
-            }catch(Exception)
+            }catch(Exception ex) 
             {
+                response.Message = "Ocorreu um erro ao tentar cadastrar o atendente";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }
@@ -65,9 +69,11 @@ namespace ListaEspera.Services.Attendant
                 
                 return response;
                 
-            }catch(Exception)
+            }catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao tentar encontrar o antedente";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }

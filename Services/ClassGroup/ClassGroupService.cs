@@ -11,10 +11,12 @@ namespace ListaEspera.Services.ClassGroup
     public class ClassGroupService : IClassGroupService
     {
         private readonly AppDbContext _dbContext;
+        private readonly ILogger<ClassGroupService> _logger;
     
-        public ClassGroupService(AppDbContext dbContext)
+        public ClassGroupService(AppDbContext dbContext, ILogger<ClassGroupService> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<ResponseModel<ClassGroupModel>> CreateClass(ClassGroupDto classGroupDto)
@@ -44,9 +46,11 @@ namespace ListaEspera.Services.ClassGroup
 
                 return response;
                 
-            }catch(Exception)
+            }catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao tentar cadastrar uma turma";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response; 
             }
         }
@@ -71,9 +75,11 @@ namespace ListaEspera.Services.ClassGroup
                 
                 return response;
                 
-            }catch(Exception)
+            }catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao tentar encontrar a turma";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }

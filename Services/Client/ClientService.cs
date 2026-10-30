@@ -11,10 +11,12 @@ namespace ListaEspera.Services.Client
     public class ClientService : IClientService
     {
         private readonly AppDbContext _dbContext;
+        private readonly ILogger<ClientService> _logger;
 
-        public ClientService(AppDbContext dbContext)
+        public ClientService(AppDbContext dbContext, ILogger<ClientService> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
         public async Task<ResponseModel<ClientModel>> CreateClient(ClientDto clientDto)
         {
@@ -37,9 +39,11 @@ namespace ListaEspera.Services.Client
 
                 return response;
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao tentar criar o client";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }
@@ -64,10 +68,11 @@ namespace ListaEspera.Services.Client
                
                 return response;
                 
-            }catch(Exception)
+            }catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao buscar cliente";
                 response.Status = ProcessedResults.ErrorServer;
-                
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }

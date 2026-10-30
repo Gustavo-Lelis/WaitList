@@ -12,10 +12,12 @@ namespace ListaEspera.Services.Modality
     public class ModalityService : IModalityService
     {
         private readonly AppDbContext _dbContext;
+        private readonly ILogger<ModalityService> _logger;
     
-        public ModalityService(AppDbContext dbContext)
+        public ModalityService(AppDbContext dbContext, ILogger<ModalityService> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<ResponseModel<ModalityModel>> CreateModality(ModalityDto modalityDto)
@@ -39,9 +41,11 @@ namespace ListaEspera.Services.Modality
 
                 return response;
                 
-            }catch(Exception )
+            }catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao tentar cadastrar uma modalidade";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response; 
             }
         }
@@ -66,9 +70,11 @@ namespace ListaEspera.Services.Modality
                    
                        
                 return response;
-            }catch(Exception)
+            }catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao tentar listar as modalidades";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }
@@ -94,9 +100,11 @@ namespace ListaEspera.Services.Modality
                 response.Status = ProcessedResults.Ok;
                 return response;
                 
-            }catch(Exception)
+            }catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao tentar encontra a modalidade";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }

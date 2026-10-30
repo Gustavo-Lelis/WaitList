@@ -16,13 +16,16 @@ namespace ListaEspera.Services.WaitList
         private readonly IClientService _iClient;
         private readonly IClassGroupService _iClassGroup;
         private readonly IAttendantService _iAttendant;
+        private readonly ILogger<WaitListService> _logger;
 
-        public WaitListService(AppDbContext dbContext, IClientService iClient, IClassGroupService iClassGroup, IAttendantService iAttendant)
+        public WaitListService(AppDbContext dbContext, IClientService iClient, 
+            IClassGroupService iClassGroup, IAttendantService iAttendant, ILogger<WaitListService> logger)
         {
             _dbContext = dbContext;
             _iClient = iClient;
             _iClassGroup = iClassGroup;
             _iAttendant = iAttendant;
+            _logger = logger;
         }
         public async Task<ResponseModel<List<WaitListResponseDto>>> AllUserModality()
         {
@@ -48,9 +51,11 @@ namespace ListaEspera.Services.WaitList
                 return response;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                response.Message = "Ocorreu um erro ao tenta abrir a lista";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }
@@ -114,9 +119,11 @@ namespace ListaEspera.Services.WaitList
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                response.Message = "Ocorreu um erro ao cadastrar o registro";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }
@@ -153,9 +160,11 @@ namespace ListaEspera.Services.WaitList
                 
                 return response;
                 
-            }catch(Exception)
+            }catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao listar a lista";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
 
@@ -203,9 +212,11 @@ namespace ListaEspera.Services.WaitList
 
                 return response;
 
-            }catch(Exception)
+            }catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao tentar atualizar a posicao na lista";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }
@@ -235,9 +246,11 @@ namespace ListaEspera.Services.WaitList
                 
                 return response;
                 
-            }catch(Exception)
+            }catch(Exception ex)
             {
+                response.Message = "Ocorreu um erro ao tentar encontrar o registro";
                 response.Status = ProcessedResults.ErrorServer;
+                _logger.LogError(ex, "Erro ao processar");
                 return response;
             }
         }
