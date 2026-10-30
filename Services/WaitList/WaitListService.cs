@@ -48,9 +48,8 @@ namespace ListaEspera.Services.WaitList
                 return response;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                response.Message = ex.Message;
                 response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
@@ -105,11 +104,9 @@ namespace ListaEspera.Services.WaitList
                 _dbContext.Add(waitList);
                 await _dbContext.SaveChangesAsync();
 
-               var responseData = await _dbContext.WaitLists
-                    .ProjectToDto()
-                    .FirstOrDefaultAsync(c => c.Id == waitList.Id); 
-                    
-                response.Data = responseData;
+               var query = await FindRegisterToId(waitList.Id);
+
+                response.Data = query.Data;
                 response.Message = "Cliente cadastrado na lista";
                 response.Status = ProcessedResults.Created;
                 
@@ -117,9 +114,8 @@ namespace ListaEspera.Services.WaitList
 
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                response.Message = ex.Message;
                 response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
@@ -157,9 +153,8 @@ namespace ListaEspera.Services.WaitList
                 
                 return response;
                 
-            }catch(Exception ex)
+            }catch(Exception)
             {
-                response.Message = ex.Message;
                 response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
@@ -208,9 +203,8 @@ namespace ListaEspera.Services.WaitList
 
                 return response;
 
-            }catch(Exception ex)
+            }catch(Exception)
             {
-                response.Message = ex.Message;
                 response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
@@ -241,9 +235,8 @@ namespace ListaEspera.Services.WaitList
                 
                 return response;
                 
-            }catch(Exception ex)
+            }catch(Exception)
             {
-                response.Message = ex.Message;
                 response.Status = ProcessedResults.ErrorServer;
                 return response;
             }

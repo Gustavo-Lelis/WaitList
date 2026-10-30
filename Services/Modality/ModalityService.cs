@@ -39,9 +39,8 @@ namespace ListaEspera.Services.Modality
 
                 return response;
                 
-            }catch(Exception ex)
+            }catch(Exception )
             {
-                response.Message = ex.Message;
                 response.Status = ProcessedResults.ErrorServer;
                 return response; 
             }
@@ -67,9 +66,8 @@ namespace ListaEspera.Services.Modality
                    
                        
                 return response;
-            }catch(Exception ex)
+            }catch(Exception)
             {
-                response.Message = ex.Message;
                 response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
@@ -96,9 +94,8 @@ namespace ListaEspera.Services.Modality
                 response.Status = ProcessedResults.Ok;
                 return response;
                 
-            }catch(Exception ex)
+            }catch(Exception)
             {
-                response.Message = ex.Message;
                 response.Status = ProcessedResults.ErrorServer;
                 return response;
             }

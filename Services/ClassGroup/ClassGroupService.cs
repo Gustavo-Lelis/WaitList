@@ -44,9 +44,8 @@ namespace ListaEspera.Services.ClassGroup
 
                 return response;
                 
-            }catch(Exception ex)
+            }catch(Exception)
             {
-                response.Message = ex.Message;
                 response.Status = ProcessedResults.ErrorServer;
                 return response; 
             }
@@ -72,9 +71,8 @@ namespace ListaEspera.Services.ClassGroup
                 
                 return response;
                 
-            }catch(Exception ex)
+            }catch(Exception)
             {
-                response.Message = ex.Message;
                 response.Status = ProcessedResults.ErrorServer;
                 return response;
             }
